@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aitor López Hernández</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <span class="nav-logo">ALH</span>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#experience" class="nav-link">Experience</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero" id="home">
+    <!-- natural-scroll photo, scoped to hero only -->
+    <div class="hero-bg" aria-hidden="true">
+      <img src="pic_myself.png" class="hero-bg-img" alt="" />
+      <div class="hero-fade-bottom"></div>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Hello, I'm</p>
+      <h1 class="hero-name">Aitor López<br/>Hernández</h1>
+      <p class="hero-subtitle">PIC Layout &amp; Photonic Engineer &nbsp;·&nbsp; Lifelong Learner</p>
+      <div class="hero-cta">
+        <a href="#about" class="btn-primary">About me</a>
+        <a href="#experience" class="btn-outline">Experience</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- About -->
+  <section id="about" class="section">
+    <div class="container">
+      <h2 class="section-title">About Me</h2>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>
+            Have you heard of <em>Ikigai</em>? It's a Japanese concept referring to one's "reason for being" — the intersection of what you love, what you're good at, what the world needs, and what you can be paid for. Finding it is said to bring purpose, fulfilment, and even longevity.
+          </p>
+          <p>
+            Now in my thirties and after five years in academia pursuing my PhD, I'm still on that journey. But experience has given me some clear signposts:
+          </p>
+          <ul class="about-list">
+            <li>I thrive when surrounded by inspiring people who share a lust for success.</li>
+            <li>I love learning something new every single day — from cooking to Slavic languages.</li>
+            <li>I love teaching everything I know and sharing knowledge with anyone it may serve.</li>
+            <li>And yes — for a reasonable salary!</li>
+          </ul>
+          <p>
+            All of this without losing sight of the most important ingredient for happiness: a healthy balance between personal and professional life.
+          </p>
+        </div>
+        <div class="about-sidebar">
+          <div class="sidebar-card">
+            <h3>Skills</h3>
+            <ul>
+              <li>Project Leadership</li>
+              <li>GDSFactory</li>
+              <li>Tidy3D</li>
+              <li>OptoCompiler / IPKISS</li>
+              <li>Lumerical</li>
+              <li>Python / PySpark</li>
+            </ul>
+          </div>
+          <div class="sidebar-card">
+            <h3>Languages</h3>
+            <ul>
+              <li>Spanish <span class="lang-level">Native</span></li>
+              <li>English <span class="lang-level">Full Professional (C1)</span></li>
+              <li>Polish <span class="lang-level">Professional Working</span></li>
+              <li>German <span class="lang-level">Elementary</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section id="experience" class="section section-alt">
+    <div class="container">
+      <h2 class="section-title">Experience</h2>
+      <div class="timeline">
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="job-header">
+              <div>
+                <h3 class="job-title">Project Lead</h3>
+                <span class="job-company">Axiomatic_AI</span>
+              </div>
+              <span class="job-period">Jul 2025 – Oct 2025 · Castelldefels, Spain</span>
+            </div>
+            <p>Led the successful launch of <strong>PIC Designer</strong>, the company's first photonic integrated circuit design product. Collaborated with AI and software engineering teams (6 people, remote), defined the product roadmap alongside business development, and coordinated alpha and beta user-testing sessions. Delivered technical presentations at international conferences and handled reporting to grant administrations.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="job-header">
+              <div>
+                <h3 class="job-title">Photonics Domain Expert</h3>
+                <span class="job-company">Axiomatic_AI</span>
+              </div>
+              <span class="job-period">Apr 2025 – Oct 2025 · Castelldefels, Spain</span>
+            </div>
+            <p>Developed a comprehensive parametric circuit library of filter architectures using GDSFactory for Cornerstone PDK and SAX, enabling integration with AI-driven photonic design tools. Also built a circuit layout benchmark to assess performance.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="job-header">
+              <div>
+                <h3 class="job-title">Photonic Engineer</h3>
+                <span class="job-company">Alcyon Photonics</span>
+              </div>
+              <span class="job-period">May 2024 – Mar 2025 · Madrid, Spain</span>
+            </div>
+            <p>Developed a comprehensive testing pipeline for design layouts. Contributed to circuit tapeouts with three top-10 worldwide foundries, designing subsystems and collaborating on mask layout. Utilized OptoCompiler, IPKISS, and Lumerical for advanced photonic circuit design, simulation, and optimization. Represented the company at industry events.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="job-header">
+              <div>
+                <h3 class="job-title">Innovation Engineer</h3>
+                <span class="job-company">Kenmei Technologies</span>
+              </div>
+              <span class="job-period">May 2023 – May 2024 · Valencia, Spain</span>
+            </div>
+            <p>Led design of a Looker Studio dashboard monitoring radio network energy metrics (PySpark, BigQuery, PostgreSQL, Apache Airflow). Contributed to a generative AI bot assistant on Microsoft Teams via prompt engineering and multiprocessing. Simulated 5G object-localization setups using MQTT and Pandas, and helped develop a geolocation algorithm using PostGIS.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="job-header">
+              <div>
+                <h3 class="job-title">PhD Researcher</h3>
+                <span class="job-company">Universitat Politècnica de València (UPV)</span>
+              </div>
+              <span class="job-period">Jan 2018 – Apr 2023 · Valencia, Spain</span>
+            </div>
+            <p>Member of the Photonics Research Labs (PRL) group at ITEAM. Research covered automated synthesis of optical filters on photonic waveguide meshes using machine learning and gradient-based optimisation. Published in <em>Nature Communications</em> (2020, 2024), <em>Optics Express</em> (2020), and <em>Journal of Lightwave Technology</em> (2022). Presented at CLEO 2020 and IEEE Photonics Conference 2022. Contributed to the layout of a general-purpose photonic processor — the foundation for the first commercial product.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="job-header">
+              <div>
+                <h3 class="job-title">Professor</h3>
+                <span class="job-company">Universidad Europea de Valencia</span>
+              </div>
+              <span class="job-period">Sep 2022 – Dec 2022 · Valencia, Spain</span>
+            </div>
+            <p>Sole instructor for a laboratory course for 25 second-year Physics students, covering mechanics, thermodynamics, and optics. Guided practical measurements, oversaw data collection, assisted with written reports, and provided mentorship — resulting in highly positive student feedback.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="job-header">
+              <div>
+                <h3 class="job-title">Research Intern</h3>
+                <span class="job-company">Universidad Politécnica de Madrid</span>
+              </div>
+              <span class="job-period">Oct 2015 – May 2016 · Madrid, Spain</span>
+            </div>
+            <p>Collaboration scholarship at the Department of Signals, Systems and Radiocommunication. Developed C++ software to autonomously pilot a DJI Phantom drone to land on specified landmarks identified via the OpenCV library.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="job-header">
+              <div>
+                <h3 class="job-title">Intern</h3>
+                <span class="job-company">Telefónica</span>
+              </div>
+              <span class="job-period">Sep 2014 – Aug 2015 · Madrid, Spain</span>
+            </div>
+            <p>Analyzed throughput and power consumption of mobile devices across multiple countries using ANOVA tests. Facilitated bi-annual vendor meetings and compiled reports. Conducted laboratory experiments to evaluate and categorize device performance by vendor.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="section">
+    <div class="container contact-container">
+      <h2 class="section-title">Get in Touch</h2>
+      <p class="contact-intro">
+        Are you aligned with the ikigai thinking? Feel free to reach out — I'm always happy to connect.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:aitor.lopez.hernandez@gmail.com" class="contact-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          Email me
+        </a>
+        <a href="https://www.linkedin.com/in/ailoher" target="_blank" rel="noopener" class="contact-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+        <a href="https://github.com/pomorigio" target="_blank" rel="noopener" class="contact-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          GitHub
+        </a>
+        <a href="https://scholar.google.com/citations?user=l0bXwlQAAAAJ&hl=es&authuser=1" target="_blank" rel="noopener" class="contact-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 1 9l4 2.18V17c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-5.82L21 9zm0 2.3L18.33 9 12 12.25 5.67 9zM17 16H7v-3.96l5 2.71 5-2.71z"/></svg>
+          Google Scholar
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>&copy; 2026 Aitor López Hernández</p>
+  </footer>
+
+  <script>
+    // ── Navbar: transparent on hero, solid on scroll ──────────
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // ── Mobile nav toggle ─────────────────────────────────────
+    const toggle = document.querySelector('.nav-toggle');
+    const navLinks = document.getElementById('nav-links');
+    toggle.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!open));
+      navLinks.classList.toggle('open', !open);
+    });
+    navLinks.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        toggle.setAttribute('aria-expanded', 'false');
+        navLinks.classList.remove('open');
+      });
+    });
+
+    // ── Typing animation for section titles ───────────────────
+    function typeWriter(el, text, speed = 55) {
+      el.textContent = '';
+      el.classList.add('is-typing');
+      let i = 0;
+      const tick = () => {
+        if (i < text.length) {
+          el.textContent += text[i++];
+          setTimeout(tick, speed);
+        } else {
+          el.classList.remove('is-typing');
+          el.classList.add('done-typing');
+        }
+      };
+      tick();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const titles = document.querySelectorAll('.section-title');
+      titles.forEach(el => {
+        el.dataset.text = el.textContent.trim();
+        el.setAttribute('aria-label', el.dataset.text);
+        el.textContent = '';
+      });
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !entry.target.dataset.typed) {
+            entry.target.dataset.typed = 'true';
+            typeWriter(entry.target, entry.target.dataset.text);
+          }
+        });
+      }, { threshold: 0.4 });
+
+      titles.forEach(el => observer.observe(el));
+    });
+
+    // ── Fade-in on scroll for timeline items ──────────────────
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          fadeObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.timeline-item').forEach(el => {
+      fadeObserver.observe(el);
+    });
+  </script>
+</body>
+</html>
