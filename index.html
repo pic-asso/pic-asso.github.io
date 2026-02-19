@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aitor López Hernández</title>
+  <title>Aitor López Hernández · PIC Designer</title>
+  <meta name="description" content="Personal portfolio of Aitor López Hernández — Photonic Integrated Circuit designer, researcher, and lifelong learner." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -19,16 +20,18 @@
         <span></span><span></span><span></span>
       </button>
       <ul class="nav-links" id="nav-links">
-        <li><a href="#about" class="nav-link">About</a></li>
-        <li><a href="#experience" class="nav-link">Experience</a></li>
-        <li><a href="#contact" class="nav-link">Contact</a></li>
+        <li><a href="#about"    class="nav-link">About</a></li>
+        <li><a href="#journey"  class="nav-link">Journey</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#pdk"      class="nav-link">PDK</a></li>
+        <li><a href="#offchip"  class="nav-link">Off-Chip</a></li>
+        <li><a href="#connect"  class="nav-link">Connect</a></li>
       </ul>
     </div>
   </nav>
 
   <!-- Hero -->
   <header class="hero" id="home">
-    <!-- natural-scroll photo, scoped to hero only -->
     <div class="hero-bg" aria-hidden="true">
       <img src="pic_myself.png" class="hero-bg-img" alt="" />
       <div class="hero-fade-bottom"></div>
@@ -39,53 +42,54 @@
       <h1 class="hero-name">Aitor López<br/>Hernández</h1>
       <p class="hero-subtitle">PIC Layout &amp; Photonic Engineer &nbsp;·&nbsp; Lifelong Learner</p>
       <div class="hero-cta">
-        <a href="#about" class="btn-primary">About me</a>
-        <a href="#experience" class="btn-outline">Experience</a>
+        <a href="#about"   class="btn-primary">About me</a>
+        <a href="#journey" class="btn-outline">My Journey</a>
       </div>
     </div>
   </header>
 
-  <!-- About -->
+  <!-- ─────────────────────────────────────────────────────────
+       1 · The Input Port  (About Me)
+  ──────────────────────────────────────────────────────────── -->
   <section id="about" class="section">
     <div class="container">
-      <h2 class="section-title">About Me</h2>
+      <h2 class="section-title">The Input Port</h2>
+      <p class="section-tag">(About Me)</p>
       <div class="about-grid">
         <div class="about-text">
-          <p>
-            Have you heard of <em>Ikigai</em>? It's a Japanese concept referring to one's "reason for being" — the intersection of what you love, what you're good at, what the world needs, and what you can be paid for. Finding it is said to bring purpose, fulfilment, and even longevity.
+          <p class="about-lead">
+            I design photonic integrated circuits — miniaturised optical systems etched onto silicon chips smaller than your thumbnail.
           </p>
           <p>
-            Now in my thirties and after five years in academia pursuing my PhD, I'm still on that journey. But experience has given me some clear signposts:
+            My journey started in telecommunications engineering, wound through a PhD at UPV on programmable photonic processors, and has taken me through industry roles spanning automated layout, AI-assisted design tools, and foundry tapeouts with some of the world's leading fabs.
+          </p>
+          <p>
+            Have you heard of <em>Ikigai</em>? It's a Japanese concept for one's "reason for being" — the sweet spot between what you love, what you're good at, what the world needs, and what you can be paid for. I'm still finding mine, but experience has given me some clear signposts:
           </p>
           <ul class="about-list">
-            <li>I thrive when surrounded by inspiring people who share a lust for success.</li>
-            <li>I love learning something new every single day — from cooking to Slavic languages.</li>
-            <li>I love teaching everything I know and sharing knowledge with anyone it may serve.</li>
-            <li>And yes — for a reasonable salary!</li>
+            <li>I thrive when surrounded by people who are genuinely excited about what they build.</li>
+            <li>I learn something new every single day — from waveguide physics to Slavic morphology.</li>
+            <li>I love sharing knowledge. Teaching a concept until it clicks is its own reward.</li>
+            <li>I believe the best engineering happens when personal life and work are in honest balance.</li>
           </ul>
-          <p>
-            All of this without losing sight of the most important ingredient for happiness: a healthy balance between personal and professional life.
-          </p>
         </div>
         <div class="about-sidebar">
           <div class="sidebar-card">
-            <h3>Skills</h3>
-            <ul>
-              <li>Project Leadership</li>
-              <li>GDSFactory</li>
-              <li>Tidy3D</li>
-              <li>OptoCompiler / IPKISS</li>
-              <li>Lumerical</li>
-              <li>Python / PySpark</li>
+            <h3>Quick Facts</h3>
+            <ul class="facts-list">
+              <li>📍 Castelldefels, Spain</li>
+              <li>🎓 PhD · Photonic Integrated Circuits</li>
+              <li>🔬 5 + yrs PIC layout &amp; simulation</li>
+              <li>📄 Published in <em>Nature Communications</em></li>
             </ul>
           </div>
           <div class="sidebar-card">
             <h3>Languages</h3>
             <ul>
               <li>Spanish <span class="lang-level">Native</span></li>
-              <li>English <span class="lang-level">Full Professional (C1)</span></li>
-              <li>Polish <span class="lang-level">Professional Working</span></li>
-              <li>German <span class="lang-level">Elementary</span></li>
+              <li>English <span class="lang-level">C1 · Full Professional</span></li>
+              <li>Polish  <span class="lang-level">Professional Working</span></li>
+              <li>German  <span class="lang-level">Elementary</span></li>
             </ul>
           </div>
         </div>
@@ -93,11 +97,17 @@
     </div>
   </section>
 
-  <!-- Experience -->
-  <section id="experience" class="section section-alt">
+  <!-- ─────────────────────────────────────────────────────────
+       2 · Phase Shifts  (Career Journey & Education)
+  ──────────────────────────────────────────────────────────── -->
+  <section id="journey" class="section section-alt">
     <div class="container">
-      <h2 class="section-title">Experience</h2>
+      <h2 class="section-title">Phase Shifts</h2>
+      <p class="section-tag">(Career Journey &amp; Education)</p>
       <div class="timeline">
+
+        <!-- ── Industry ── -->
+        <p class="timeline-group-label">Industry</p>
 
         <div class="timeline-item">
           <div class="timeline-marker"></div>
@@ -123,7 +133,7 @@
               </div>
               <span class="job-period">Apr 2025 – Oct 2025 · Castelldefels, Spain</span>
             </div>
-            <p>Developed a comprehensive parametric circuit library of filter architectures using GDSFactory for Cornerstone PDK and SAX, enabling integration with AI-driven photonic design tools. Also built a circuit layout benchmark to assess performance.</p>
+            <p>Developed a comprehensive parametric circuit library of filter architectures using GDSFactory for the Cornerstone PDK and SAX, enabling integration with AI-driven photonic design tools. Also built a circuit layout benchmark to assess tool performance.</p>
           </div>
         </div>
 
@@ -137,7 +147,7 @@
               </div>
               <span class="job-period">May 2024 – Mar 2025 · Madrid, Spain</span>
             </div>
-            <p>Developed a comprehensive testing pipeline for design layouts. Contributed to circuit tapeouts with three top-10 worldwide foundries, designing subsystems and collaborating on mask layout. Utilized OptoCompiler, IPKISS, and Lumerical for advanced photonic circuit design, simulation, and optimization. Represented the company at industry events.</p>
+            <p>Developed a comprehensive testing pipeline for design layouts. Contributed to circuit tapeouts with three top-10 worldwide foundries, designing subsystems and collaborating on mask layout. Utilised OptoCompiler, IPKISS, and Lumerical for advanced photonic circuit design, simulation, and optimisation. Represented the company at industry events.</p>
           </div>
         </div>
 
@@ -151,35 +161,7 @@
               </div>
               <span class="job-period">May 2023 – May 2024 · Valencia, Spain</span>
             </div>
-            <p>Led design of a Looker Studio dashboard monitoring radio network energy metrics (PySpark, BigQuery, PostgreSQL, Apache Airflow). Contributed to a generative AI bot assistant on Microsoft Teams via prompt engineering and multiprocessing. Simulated 5G object-localization setups using MQTT and Pandas, and helped develop a geolocation algorithm using PostGIS.</p>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-marker"></div>
-          <div class="timeline-content">
-            <div class="job-header">
-              <div>
-                <h3 class="job-title">PhD Researcher</h3>
-                <span class="job-company">Universitat Politècnica de València (UPV)</span>
-              </div>
-              <span class="job-period">Jan 2018 – Apr 2023 · Valencia, Spain</span>
-            </div>
-            <p>Member of the Photonics Research Labs (PRL) group at ITEAM. Research covered automated synthesis of optical filters on photonic waveguide meshes using machine learning and gradient-based optimisation. Published in <em>Nature Communications</em> (2020, 2024), <em>Optics Express</em> (2020), and <em>Journal of Lightwave Technology</em> (2022). Presented at CLEO 2020 and IEEE Photonics Conference 2022. Contributed to the layout of a general-purpose photonic processor — the foundation for the first commercial product.</p>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-marker"></div>
-          <div class="timeline-content">
-            <div class="job-header">
-              <div>
-                <h3 class="job-title">Professor</h3>
-                <span class="job-company">Universidad Europea de Valencia</span>
-              </div>
-              <span class="job-period">Sep 2022 – Dec 2022 · Valencia, Spain</span>
-            </div>
-            <p>Sole instructor for a laboratory course for 25 second-year Physics students, covering mechanics, thermodynamics, and optics. Guided practical measurements, oversaw data collection, assisted with written reports, and provided mentorship — resulting in highly positive student feedback.</p>
+            <p>Led design of a Looker Studio dashboard monitoring radio-network energy metrics (PySpark, BigQuery, PostgreSQL, Apache Airflow). Contributed to a generative AI assistant on Microsoft Teams via prompt engineering and multiprocessing. Simulated 5G object-localisation setups using MQTT and Pandas, and helped develop a geolocation algorithm using PostGIS.</p>
           </div>
         </div>
 
@@ -207,44 +189,337 @@
               </div>
               <span class="job-period">Sep 2014 – Aug 2015 · Madrid, Spain</span>
             </div>
-            <p>Analyzed throughput and power consumption of mobile devices across multiple countries using ANOVA tests. Facilitated bi-annual vendor meetings and compiled reports. Conducted laboratory experiments to evaluate and categorize device performance by vendor.</p>
+            <p>Analysed throughput and power consumption of mobile devices across multiple countries using ANOVA tests. Facilitated bi-annual vendor meetings and compiled reports. Conducted laboratory experiments to evaluate and categorise device performance by vendor.</p>
           </div>
+        </div>
+
+        <!-- ── Academia ── -->
+        <p class="timeline-group-label" style="margin-top:2.5rem;">Academia</p>
+
+        <div class="timeline-item">
+          <div class="timeline-marker timeline-marker--edu"></div>
+          <div class="timeline-content">
+            <div class="job-header">
+              <div>
+                <h3 class="job-title">PhD Researcher</h3>
+                <span class="job-company">Universitat Politècnica de València (UPV)</span>
+              </div>
+              <span class="job-period">Jan 2018 – Apr 2023 · Valencia, Spain</span>
+            </div>
+            <p>Member of the Photonics Research Labs (PRL) group at ITEAM. Research covered automated synthesis of optical filters on photonic waveguide meshes using machine learning and gradient-based optimisation. Published in <em>Nature Communications</em> (2020, 2024), <em>Optics Express</em> (2020), and <em>Journal of Lightwave Technology</em> (2022). Presented at CLEO 2020 and IEEE Photonics Conference 2022. Contributed to the layout of a general-purpose photonic processor — the foundation for the company's first commercial product.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker timeline-marker--edu"></div>
+          <div class="timeline-content">
+            <div class="job-header">
+              <div>
+                <h3 class="job-title">Professor · Laboratory Course</h3>
+                <span class="job-company">Universidad Europea de Valencia</span>
+              </div>
+              <span class="job-period">Sep 2022 – Dec 2022 · Valencia, Spain</span>
+            </div>
+            <p>Sole instructor for a laboratory course for 25 second-year Physics students, covering mechanics, thermodynamics, and optics. Guided practical measurements, oversaw data collection, assisted with written reports, and provided mentorship — resulting in highly positive student feedback.</p>
+          </div>
+        </div>
+
+      </div><!-- /timeline -->
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────
+       3 · Constructive Interference  (Projects & Layouts)
+  ──────────────────────────────────────────────────────────── -->
+  <section id="projects" class="section">
+    <div class="container">
+      <h2 class="section-title">Constructive Interference</h2>
+      <p class="section-tag">(Projects &amp; Layouts)</p>
+      <p class="section-intro">A sample of my work — from raw GDSII geometry to electromagnetic field plots and the Python that generates them. Full write-ups coming soon.</p>
+      <div class="projects-grid">
+
+        <!-- Card 1 · GDSII Layout -->
+        <div class="project-card project-card--gdsii">
+          <div class="project-card-header">
+            <span class="project-type-badge">GDSII Layout</span>
+          </div>
+          <div class="project-card-visual" aria-hidden="true">
+            <div class="gdsii-bg-grid"></div>
+            <div class="gdsii-chip">
+              <div class="gdsii-bus gdsii-bus--h" style="top:35%"></div>
+              <div class="gdsii-bus gdsii-bus--h" style="top:65%"></div>
+              <div class="gdsii-bus gdsii-bus--v" style="left:30%"></div>
+              <div class="gdsii-bus gdsii-bus--v" style="left:70%"></div>
+              <span class="gdsii-chip-label">220 nm SOI</span>
+            </div>
+          </div>
+          <div class="project-card-body">
+            <h3>Photonic Waveguide Mesh</h3>
+            <p>General-purpose programmable photonic processor — ring-resonator filter bank with automated routing, exported DRC-clean for the Cornerstone PDK.</p>
+            <div class="project-tags">
+              <span>GDSFactory</span><span>KLayout</span><span>Cornerstone PDK</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 · FDTD Simulation -->
+        <div class="project-card project-card--fdtd">
+          <div class="project-card-header">
+            <span class="project-type-badge">FDTD Simulation</span>
+          </div>
+          <div class="project-card-visual fdtd-visual" aria-hidden="true">
+            <div class="fdtd-field"></div>
+            <div class="fdtd-legend">
+              <span class="fdtd-label">−|E|</span>
+              <div class="fdtd-colorbar"></div>
+              <span class="fdtd-label">+|E|</span>
+            </div>
+          </div>
+          <div class="project-card-body">
+            <h3>Directional Coupler Sweep</h3>
+            <p>E-field intensity distribution across coupling gap widths (100–300 nm). Parametric sweep to extract coupling coefficients for filter synthesis.</p>
+            <div class="project-tags">
+              <span>Tidy3D</span><span>Lumerical</span><span>Python</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 · Routing Code -->
+        <div class="project-card project-card--code">
+          <div class="project-card-header">
+            <span class="project-type-badge">Routing Script</span>
+          </div>
+          <div class="project-card-visual code-visual" aria-hidden="true">
+            <pre class="code-block"><code><span class="c-kw">import</span> gdsfactory <span class="c-kw">as</span> gf
+
+<span class="c-fn">@gf.cell</span>
+<span class="c-kw">def</span> <span class="c-fn">ring_filter</span>(
+    gap: <span class="c-ty">float</span> = <span class="c-nu">0.2</span>,
+    radius: <span class="c-ty">float</span> = <span class="c-nu">10.0</span>,
+    layers: <span class="c-ty">dict</span> = <span class="c-nu">None</span>,
+) -> gf.Component:
+    c = gf.Component()
+    ring = c << gf.components.<span class="c-fn">ring_single</span>(
+        gap=gap,
+        radius=radius,
+    )
+    <span class="c-kw">return</span> c</code></pre>
+          </div>
+          <div class="project-card-body">
+            <h3>Parametric Ring Library</h3>
+            <p>Reusable GDSFactory cell definitions for ring resonators, Mach-Zehnder interferometers, and Y-junctions — portable across Cornerstone &amp; IME A*STAR PDKs.</p>
+            <div class="project-tags">
+              <span>GDSFactory</span><span>Python</span><span>SAX</span>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /projects-grid -->
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────
+       4 · My PDK  (Tech Stack & Tools)
+  ──────────────────────────────────────────────────────────── -->
+  <section id="pdk" class="section section-alt">
+    <div class="container">
+      <h2 class="section-title">My PDK</h2>
+      <p class="section-tag">(Tech Stack &amp; Tools)</p>
+      <p class="section-intro">Every photonic foundry ships a PDK — a curated library of tested building blocks. Here's mine.</p>
+
+      <div class="pdk-groups">
+
+        <!-- Foundation -->
+        <div class="pdk-group">
+          <h3 class="pdk-group-title">Foundation</h3>
+          <div class="tools-grid">
+            <div class="tool-card">
+              <div class="tool-icon tool-icon--python">Py</div>
+              <div class="tool-info">
+                <span class="tool-name">Python</span>
+                <span class="tool-desc">The backbone of my workflow — parametric scripting, automation, and data analysis across every project I touch.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Layout & Design -->
+        <div class="pdk-group">
+          <h3 class="pdk-group-title">Layout &amp; Design</h3>
+          <div class="tools-grid">
+            <div class="tool-card">
+              <div class="tool-icon tool-icon--gds">GDS</div>
+              <div class="tool-info">
+                <span class="tool-name">GDSFactory</span>
+                <span class="tool-desc">Automated layout routing, parametric component generation, and DRC-clean tapeout exports — all from Python.</span>
+              </div>
+            </div>
+            <div class="tool-card">
+              <div class="tool-icon tool-icon--kl">KL</div>
+              <div class="tool-info">
+                <span class="tool-name">KLayout</span>
+                <span class="tool-desc">Layout inspection, DRC rule checking, and final mask preparation before handing off to the foundry.</span>
+              </div>
+            </div>
+            <div class="tool-card">
+              <div class="tool-icon tool-icon--ipk">IPK</div>
+              <div class="tool-info">
+                <span class="tool-name">Luceda IPKISS</span>
+                <span class="tool-desc">Circuit-level photonic design — from functional schematic to foundry-ready layout using technology-aware PDKs.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Simulation -->
+        <div class="pdk-group">
+          <h3 class="pdk-group-title">Simulation</h3>
+          <div class="tools-grid">
+            <div class="tool-card">
+              <div class="tool-icon tool-icon--lum">LUM</div>
+              <div class="tool-info">
+                <span class="tool-name">Lumerical</span>
+                <span class="tool-desc">High-fidelity 3D FDTD and MODE simulations for component characterisation and optical mode analysis.</span>
+              </div>
+            </div>
+            <div class="tool-card">
+              <div class="tool-icon tool-icon--meep">MEP</div>
+              <div class="tool-info">
+                <span class="tool-name">Meep</span>
+                <span class="tool-desc">Open-source FDTD for research-grade photonic device design, topology optimisation, and adjoint-method gradient computation.</span>
+              </div>
+            </div>
+            <div class="tool-card">
+              <div class="tool-icon tool-icon--t3d">T3D</div>
+              <div class="tool-info">
+                <span class="tool-name">Tidy3D</span>
+                <span class="tool-desc">Cloud-accelerated FDTD for fast parametric sweeps and large-scale structures — GPU speed, Python interface.</span>
+              </div>
+            </div>
+            <div class="tool-card">
+              <div class="tool-icon tool-icon--fem">FEM</div>
+              <div class="tool-info">
+                <span class="tool-name">Femwell</span>
+                <span class="tool-desc">Finite-element waveguide mode solver for cross-section analysis, effective index, and group velocity extraction.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /pdk-groups -->
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────
+       5 · Off-Chip  (Side Projects & Hobbies)
+  ──────────────────────────────────────────────────────────── -->
+  <section id="offchip" class="section">
+    <div class="container">
+      <h2 class="section-title">Off-Chip</h2>
+      <p class="section-tag">(Side Projects &amp; Hobbies)</p>
+      <p class="section-intro">Life outside the fab — because the best engineers bring the whole person to work.</p>
+      <div class="hobbies-grid">
+
+        <div class="hobby-card">
+          <span class="hobby-icon">🌍</span>
+          <h3>Language Learning</h3>
+          <p>Currently pushing my Polish to B2 and fascinated by Slavic morphology — it's a different kind of pattern recognition. German is next on the list.</p>
+        </div>
+
+        <div class="hobby-card">
+          <span class="hobby-icon">🍳</span>
+          <h3>Cooking</h3>
+          <p>Firmly in the "cooking is applied chemistry" camp. Sourdough, slow-fermented stocks, the occasional over-ambitious Spanish recipe. Reproducible results not guaranteed.</p>
+        </div>
+
+        <div class="hobby-card">
+          <span class="hobby-icon">📚</span>
+          <h3>Teaching &amp; Writing</h3>
+          <p>I've lectured Physics labs, mentored junior engineers, and enjoy writing plain-language explainers on photonics. If you can't explain it simply, you don't understand it yet.</p>
+        </div>
+
+        <div class="hobby-card">
+          <span class="hobby-icon">✈️</span>
+          <h3>Travel &amp; Culture</h3>
+          <p>Living and working across Spain, Poland, and beyond has given me a genuine appreciation for different working cultures and ways of framing problems.</p>
         </div>
 
       </div>
     </div>
   </section>
 
-  <!-- Contact -->
-  <section id="contact" class="section">
+  <!-- ─────────────────────────────────────────────────────────
+       6 · Phase Match With Me  (Let's Connect!)
+  ──────────────────────────────────────────────────────────── -->
+  <section id="connect" class="section section-alt">
     <div class="container contact-container">
-      <h2 class="section-title">Get in Touch</h2>
-      <p class="contact-intro">
-        Are you aligned with the ikigai thinking? Feel free to reach out — I'm always happy to connect.
+      <h2 class="section-title">Phase Match With Me</h2>
+      <p class="section-tag">(Let's Connect!)</p>
+      <p class="connect-intro">
+        Whether you want to talk photonics, swap ideas, ask a question that feels too basic (there are none), find a mentor, or just grab a virtual coffee — my calendar is open. I'm equally happy to mentor as to be mentored.
       </p>
-      <div class="contact-links">
-        <a href="mailto:aitor.lopez.hernandez@gmail.com" class="contact-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-          Email me
+
+      <!-- Calendar booking -->
+      <!--
+        Note: calendar.app.google short-links set X-Frame-Options: DENY,
+        so iframe embedding is blocked by Google's security policy.
+        The button below is the reliable, cross-browser approach.
+      -->
+      <div class="calendar-area">
+        <a
+          href="https://calendar.app.google/wfqAMS195y5CYvAt7"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="booking-btn"
+          aria-label="Book a 15-minute slot on Google Calendar"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8"  y1="2" x2="8"  y2="6"/>
+            <line x1="3"  y1="10" x2="21" y2="10"/>
+          </svg>
+          Book a 15-Min Slot
         </a>
+        <p class="booking-hint">Opens Google Calendar — pick any free slot, no agenda required.</p>
+      </div>
+
+      <!-- Social links -->
+      <div class="social-row">
         <a href="https://www.linkedin.com/in/ailoher" target="_blank" rel="noopener" class="contact-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+            <rect x="2" y="9" width="4" height="12"/>
+            <circle cx="4" cy="4" r="2"/>
+          </svg>
           LinkedIn
         </a>
         <a href="https://github.com/pomorigio" target="_blank" rel="noopener" class="contact-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/>
+          </svg>
           GitHub
         </a>
+        <a href="mailto:aitor@pic-asso.me" class="contact-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="4" width="20" height="16" rx="2"/>
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+          </svg>
+          Email
+        </a>
         <a href="https://scholar.google.com/citations?user=l0bXwlQAAAAJ&hl=es&authuser=1" target="_blank" rel="noopener" class="contact-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 1 9l4 2.18V17c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-5.82L21 9zm0 2.3L18.33 9 12 12.25 5.67 9zM17 16H7v-3.96l5 2.71 5-2.71z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 3 1 9l4 2.18V17c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-5.82L21 9zm0 2.3L18.33 9 12 12.25 5.67 9zM17 16H7v-3.96l5 2.71 5-2.71z"/>
+          </svg>
           Google Scholar
         </a>
       </div>
+
     </div>
   </section>
 
   <footer class="footer">
-    <p>&copy; 2026 Aitor López Hernández</p>
+    <p>&copy; 2026 Aitor López Hernández &nbsp;·&nbsp; Photonic Integrated Circuit Designer</p>
   </footer>
 
   <script>
@@ -255,7 +530,7 @@
     });
 
     // ── Mobile nav toggle ─────────────────────────────────────
-    const toggle = document.querySelector('.nav-toggle');
+    const toggle   = document.querySelector('.nav-toggle');
     const navLinks = document.getElementById('nav-links');
     toggle.addEventListener('click', () => {
       const open = toggle.getAttribute('aria-expanded') === 'true';
@@ -270,7 +545,7 @@
     });
 
     // ── Typing animation for section titles ───────────────────
-    function typeWriter(el, text, speed = 55) {
+    function typeWriter(el, text, speed = 52) {
       el.textContent = '';
       el.classList.add('is-typing');
       let i = 0;
@@ -294,7 +569,7 @@
         el.textContent = '';
       });
 
-      const observer = new IntersectionObserver((entries) => {
+      const titleObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting && !entry.target.dataset.typed) {
             entry.target.dataset.typed = 'true';
@@ -303,10 +578,10 @@
         });
       }, { threshold: 0.4 });
 
-      titles.forEach(el => observer.observe(el));
+      titles.forEach(el => titleObserver.observe(el));
     });
 
-    // ── Fade-in on scroll for timeline items ──────────────────
+    // ── Fade-in on scroll ─────────────────────────────────────
     const fadeObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -316,9 +591,9 @@
       });
     }, { threshold: 0.1 });
 
-    document.querySelectorAll('.timeline-item').forEach(el => {
-      fadeObserver.observe(el);
-    });
+    document.querySelectorAll(
+      '.timeline-item, .project-card, .tool-card, .hobby-card'
+    ).forEach(el => fadeObserver.observe(el));
   </script>
 </body>
 </html>
