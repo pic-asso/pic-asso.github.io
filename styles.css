@@ -913,6 +913,35 @@ img { max-width: 100%; display: block; }
   transform: translateY(-2px);
 }
 
+/* ── CV download ─────────────────────────────────────────────── */
+.cv-area {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.75rem;
+}
+
+.cv-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .75rem 2rem;
+  background: transparent;
+  border: 2px solid rgba(212, 168, 67, 0.55);
+  border-radius: 2rem;
+  color: var(--accent);
+  font-weight: 600;
+  font-size: .95rem;
+  letter-spacing: .02em;
+  transition: background .2s, color .2s, border-color .2s, transform .15s;
+}
+
+.cv-btn:hover {
+  background: var(--accent);
+  color: var(--dark);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
 /* ── Footer ──────────────────────────────────────────────────── */
 .footer {
   text-align: center;
