@@ -31,7 +31,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, .nav-logo {
+h1, h2, h3 {
   font-family: 'Syne', sans-serif;
 }
 
@@ -64,10 +64,11 @@ img { max-width: 100%; display: block; }
 }
 
 .nav-logo {
-  font-size: 1.1rem;
-  font-weight: 800;
+  font-family: 'Raleway', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
   color: var(--accent);
-  letter-spacing: .12em;
+  letter-spacing: .04em;
 }
 
 .nav-links {
@@ -184,15 +185,25 @@ img { max-width: 100%; display: block; }
   font-weight: 200;
   color: var(--white);
   line-height: 1.1;
-  margin-bottom: 1.2rem;
+  margin-bottom: 0.75rem;
   animation: hero-slide-up 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.4s both;
+}
+
+.hero-logo-img {
+  width: 300px;
+  max-width: 78%;
+  height: auto;
+  display: block;
+  opacity: 0.92;
+  margin-bottom: 1.4rem;
+  animation: hero-slide-up 1.5s cubic-bezier(0.22, 1, 0.36, 1) 0.55s both;
 }
 
 .hero-subtitle {
   font-size: 1.05rem;
   color: rgba(255, 255, 255, .58);
   margin-bottom: 2.5rem;
-  animation: hero-slide-up 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.65s both;
+  animation: hero-slide-up 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.75s both;
 }
 
 .hero-cta {
