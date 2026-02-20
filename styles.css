@@ -1384,6 +1384,14 @@ img { max-width: 100%; display: block; }
   margin-bottom: .85rem;
 }
 
+/* Code section — side-by-side layout */
+.detail-code-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
 /* Code block */
 .detail-code-wrap {
   background: #0d1117;
@@ -1399,6 +1407,53 @@ img { max-width: 100%; display: block; }
   font-family: 'JetBrains Mono', monospace;
   font-size: .82rem;
   line-height: 1.7;
+}
+
+/* Layout visual panel (GDS-style view) */
+.detail-code-visual {
+  background: #040406;
+  border-radius: var(--radius);
+  border: 1px solid var(--glass-border);
+  overflow: hidden;
+  position: relative;
+  min-height: 260px;
+}
+
+/* Straight waveguide top-view illustration */
+.swg-wrap {
+  position: absolute;
+  left: 8%; right: 8%;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+}
+
+.swg-port {
+  width: 2px;
+  height: 22px;
+  background: rgba(212, 168, 67, 0.55);
+  flex-shrink: 0;
+}
+
+.swg-core {
+  flex: 1;
+  height: 7px;
+  background: rgba(212, 168, 67, 0.72);
+  border-radius: 1px;
+  box-shadow: 0 0 14px rgba(212, 168, 67, 0.25);
+}
+
+.swg-label {
+  position: absolute;
+  bottom: .85rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .55rem;
+  color: rgba(212, 168, 67, 0.50);
+  letter-spacing: .10em;
+  white-space: nowrap;
 }
 
 /* Equations */
@@ -1469,6 +1524,12 @@ img { max-width: 100%; display: block; }
   .hobbies-grid {
     grid-template-columns: 1fr;
   }
+
+  .detail-code-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-code-visual { min-height: 180px; }
 }
 
 /* ── Mobile ≤ 640px ──────────────────────────────────────────── */
