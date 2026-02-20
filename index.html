@@ -22,7 +22,15 @@
       <ul class="nav-links" id="nav-links">
         <li><a href="#about"    class="nav-link">About</a></li>
         <li><a href="#journey"  class="nav-link">Journey</a></li>
-        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li class="nav-item-dropdown">
+          <a href="#projects" class="nav-link nav-link--has-dropdown" id="projects-nav-link" aria-haspopup="true" aria-expanded="false">
+            Projects
+            <svg class="dropdown-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="1 1 5 5 9 1"/></svg>
+          </a>
+          <ul class="nav-dropdown" id="nav-dropdown-projects" role="menu">
+            <!-- populated by JS -->
+          </ul>
+        </li>
         <li><a href="#pdk"      class="nav-link">PDK</a></li>
         <li><a href="#offchip"  class="nav-link">Off-Chip</a></li>
         <li><a href="#connect"  class="nav-link">Connect</a></li>
@@ -249,84 +257,8 @@
       <h2 class="section-title">Constructive Interference</h2>
       <p class="section-tag">(Projects &amp; Layouts)</p>
       <p class="section-intro">A sample of my work — from raw GDSII geometry to electromagnetic field plots and the Python that generates them. Full write-ups coming soon!</p>
-      <div class="projects-grid">
-
-        <!-- Card 1 · GDSII Layout -->
-        <div class="project-card project-card--gdsii">
-          <div class="project-card-header">
-            <span class="project-type-badge">GDSII Layout</span>
-          </div>
-          <div class="project-card-visual" aria-hidden="true">
-            <div class="gdsii-bg-grid"></div>
-            <div class="gdsii-chip">
-              <div class="gdsii-bus gdsii-bus--h" style="top:35%"></div>
-              <div class="gdsii-bus gdsii-bus--h" style="top:65%"></div>
-              <div class="gdsii-bus gdsii-bus--v" style="left:30%"></div>
-              <div class="gdsii-bus gdsii-bus--v" style="left:70%"></div>
-              <span class="gdsii-chip-label">220 nm SOI</span>
-            </div>
-          </div>
-          <div class="project-card-body">
-            <h3>Placeholder 1</h3>
-            <p>Coming soon!</p>
-            <div class="project-tags">
-              <span>GDSFactory</span><span>KLayout</span><span>Cornerstone PDK</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 2 · FDTD Simulation -->
-        <div class="project-card project-card--fdtd">
-          <div class="project-card-header">
-            <span class="project-type-badge">FDTD Simulation</span>
-          </div>
-          <div class="project-card-visual fdtd-visual" aria-hidden="true">
-            <div class="fdtd-field"></div>
-            <div class="fdtd-legend">
-              <span class="fdtd-label">−|E|</span>
-              <div class="fdtd-colorbar"></div>
-              <span class="fdtd-label">+|E|</span>
-            </div>
-          </div>
-          <div class="project-card-body">
-            <h3>Placeholder 2</h3>
-            <p>Coming soon!</p>
-            <div class="project-tags">
-              <span>Tidy3D</span><span>Lumerical</span><span>Python</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 3 · Routing Code -->
-        <div class="project-card project-card--code">
-          <div class="project-card-header">
-            <span class="project-type-badge">Routing Script</span>
-          </div>
-          <div class="project-card-visual code-visual" aria-hidden="true">
-            <pre class="code-block"><code><span class="c-kw">import</span> gdsfactory <span class="c-kw">as</span> gf
-
-<span class="c-fn">@gf.cell</span>
-<span class="c-kw">def</span> <span class="c-fn">ring_filter</span>(
-    gap: <span class="c-ty">float</span> = <span class="c-nu">0.2</span>,
-    radius: <span class="c-ty">float</span> = <span class="c-nu">10.0</span>,
-    layers: <span class="c-ty">dict</span> = <span class="c-nu">None</span>,
-) -> gf.Component:
-    c = gf.Component()
-    ring = c << gf.components.<span class="c-fn">ring_single</span>(
-        gap=gap,
-        radius=radius,
-    )
-    <span class="c-kw">return</span> c</code></pre>
-          </div>
-          <div class="project-card-body">
-            <h3>Placeholder 3</h3>
-            <p>Coming soon!</p>
-            <div class="project-tags">
-              <span>GDSFactory</span><span>Python</span><span>SAX</span>
-            </div>
-          </div>
-        </div>
-
+      <div class="projects-grid" id="projects-grid">
+        <!-- dynamically rendered by JS from projects-data.js -->
       </div><!-- /projects-grid -->
     </div>
   </section>
@@ -547,7 +479,17 @@
     <p>Drawing light. Etching silicon. &nbsp;·&nbsp; &copy; 2026 Aitor López Hernández</p>
   </footer>
 
+  <script src="projects-data.js"></script>
   <script>
+    // ── HTML escape utility ────────────────────────────────────
+    function escHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
     // ── Navbar: transparent on hero, solid on scroll ──────────
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
@@ -568,6 +510,9 @@
         navLinks.classList.remove('open');
       });
     });
+
+    // On mobile the dropdown is hidden via CSS; clicking "Projects" just
+    // navigates to #projects normally. No JS needed for that.
 
     // ── Typing animation ───────────────────────────────────────
     function typeWriter(el, text, speed = 52, onComplete = null) {
@@ -622,7 +567,109 @@
       }, 500);
     }
 
+    // ── Fade-in observer (shared) ─────────────────────────────
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          fadeObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    // ── Card visual HTML builders ─────────────────────────────
+    function renderCardVisual(p) {
+      if (p.cardVisual === 'gdsii') {
+        return `<div class="project-card-visual" aria-hidden="true">
+          <div class="gdsii-bg-grid"></div>
+          <div class="gdsii-chip">
+            <div class="gdsii-bus gdsii-bus--h" style="top:35%"></div>
+            <div class="gdsii-bus gdsii-bus--h" style="top:65%"></div>
+            <div class="gdsii-bus gdsii-bus--v" style="left:30%"></div>
+            <div class="gdsii-bus gdsii-bus--v" style="left:70%"></div>
+            <span class="gdsii-chip-label">${escHtml(p.cardBadge)}</span>
+          </div>
+        </div>`;
+      }
+      if (p.cardVisual === 'fdtd') {
+        return `<div class="project-card-visual fdtd-visual" aria-hidden="true">
+          <div class="fdtd-field"></div>
+          <div class="fdtd-legend">
+            <span class="fdtd-label">−|E|</span>
+            <div class="fdtd-colorbar"></div>
+            <span class="fdtd-label">+|E|</span>
+          </div>
+        </div>`;
+      }
+      if (p.cardVisual === 'code') {
+        return `<div class="project-card-visual code-visual" aria-hidden="true">
+          <pre class="code-block"><code><span class="c-kw">import</span> gdsfactory <span class="c-kw">as</span> gf
+
+<span class="c-fn">@gf.cell</span>
+<span class="c-kw">def</span> <span class="c-fn">crow_filter</span>(
+    order: <span class="c-ty">int</span> = <span class="c-nu">3</span>,
+    radius: <span class="c-ty">float</span> = <span class="c-nu">10.0</span>,
+) -> gf.Component:
+    c = gf.Component()
+    <span class="c-kw">return</span> c</code></pre>
+        </div>`;
+      }
+      return '';
+    }
+
+    // ── Render project cards dynamically ──────────────────────
+    function renderProjectCards() {
+      const grid = document.getElementById('projects-grid');
+      if (!grid || typeof PROJECTS === 'undefined') return;
+
+      grid.innerHTML = PROJECTS.map(p => {
+        const tags = p.toolstack
+          .map(t => `<span>${escHtml(t)}</span>`)
+          .join('');
+        const visual = renderCardVisual(p);
+        return `<a href="/projects/?id=${escHtml(p.id)}"
+            class="project-card project-card--${escHtml(p.cardVisual)} project-card--clickable"
+            aria-label="${escHtml(p.title)}">
+          <div class="project-card-header">
+            <span class="project-type-badge">${escHtml(p.type)}</span>
+          </div>
+          ${visual}
+          <div class="card-preview-overlay">
+            <span class="preview-label">Technical Preview</span>
+            <p class="preview-text">${escHtml(p.preview)}</p>
+            <span class="preview-cta">View Project →</span>
+          </div>
+          <div class="project-card-body">
+            <h3>${escHtml(p.title)}</h3>
+            <p>Full write-up coming soon!</p>
+            <div class="project-tags">${tags}</div>
+          </div>
+        </a>`;
+      }).join('');
+
+      // Register cards with fade observer
+      grid.querySelectorAll('.project-card').forEach(el => fadeObserver.observe(el));
+    }
+
+    // ── Populate nav dropdown ─────────────────────────────────
+    function populateNavDropdown() {
+      const dropdown = document.getElementById('nav-dropdown-projects');
+      if (!dropdown || typeof PROJECTS === 'undefined') return;
+
+      const allLink = `<li role="menuitem"><a class="nav-dropdown-link" href="#projects">All Projects</a></li>`;
+      const divider = `<li class="nav-dropdown-divider" role="separator"></li>`;
+      const projectLinks = PROJECTS.map(p =>
+        `<li role="menuitem"><a class="nav-dropdown-link" href="/projects/?id=${escHtml(p.id)}">${escHtml(p.title)}</a></li>`
+      ).join('');
+
+      dropdown.innerHTML = allLink + divider + projectLinks;
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
+      // Render dynamic content first
+      renderProjectCards();
+      populateNavDropdown();
+
       heroSequence();
 
       const titles = document.querySelectorAll('.section-title');
@@ -642,21 +689,12 @@
       }, { threshold: 0.4 });
 
       titles.forEach(el => titleObserver.observe(el));
+
+      // Fade-in for non-card elements (cards self-register in renderProjectCards)
+      document.querySelectorAll(
+        '.timeline-item, .tool-card, .hobby-card'
+      ).forEach(el => fadeObserver.observe(el));
     });
-
-    // ── Fade-in on scroll ─────────────────────────────────────
-    const fadeObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          fadeObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll(
-      '.timeline-item, .project-card, .tool-card, .hobby-card'
-    ).forEach(el => fadeObserver.observe(el));
   </script>
 </body>
 </html>

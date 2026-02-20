@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project · PIC-asso</title>
+  <meta name="description" content="Project detail — PIC-asso portfolio of Aitor López Hernández." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Raleway:wght@200;300&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <!-- KaTeX -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous" />
+  <!-- highlight.js github-dark theme -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/styles/github-dark.min.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body class="project-detail-page">
+
+  <!-- Navigation (always scrolled on detail pages) -->
+  <nav class="navbar scrolled" id="navbar">
+    <div class="nav-container">
+      <a href="/" class="nav-logo">PIC-asso</a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="/#about"    class="nav-link">About</a></li>
+        <li><a href="/#journey"  class="nav-link">Journey</a></li>
+        <li><a href="/#projects" class="nav-link">Projects</a></li>
+        <li><a href="/#pdk"      class="nav-link">PDK</a></li>
+        <li><a href="/#offchip"  class="nav-link">Off-Chip</a></li>
+        <li><a href="/#connect"  class="nav-link">Connect</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ── Hero ────────────────────────────────────────────────── -->
+  <header class="project-hero">
+    <!-- Visual background (type-specific, populated by JS) -->
+    <div class="project-hero-bg" id="project-hero-bg" aria-hidden="true"></div>
+    <!-- Dark left-to-right overlay -->
+    <div class="project-hero-overlay" aria-hidden="true"></div>
+    <!-- Text content -->
+    <div class="project-hero-content">
+      <a href="/#projects" class="project-detail-back">← Back to Projects</a>
+      <span class="project-type-badge" id="detail-badge"></span>
+      <h1 class="project-hero-title" id="detail-title"></h1>
+      <div class="detail-toolstack" id="detail-toolstack"></div>
+    </div>
+  </header>
+
+  <!-- ── Content ─────────────────────────────────────────────── -->
+  <main class="project-detail">
+    <div class="container">
+
+      <!-- Coming-soon banner -->
+      <div class="detail-status-banner" id="detail-status-banner" style="display:none">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Full write-up &amp; results coming soon — the core code and equations are already here.
+      </div>
+
+      <!-- Overview -->
+      <section class="detail-section" id="detail-overview-section">
+        <h2>Overview</h2>
+        <div id="detail-overview"></div>
+      </section>
+
+      <!-- Code -->
+      <section class="detail-section" id="detail-code-section">
+        <h2>Code</h2>
+        <div class="detail-code-wrap">
+          <pre><code class="language-python" id="detail-code"></code></pre>
+        </div>
+      </section>
+
+      <!-- Key Equations -->
+      <section class="detail-section" id="detail-equations-section">
+        <h2>Key Equations</h2>
+        <div id="detail-equations"></div>
+      </section>
+
+      <!-- Gallery -->
+      <section class="detail-section" id="detail-gallery-section" style="display:none">
+        <h2>Gallery</h2>
+        <div class="detail-gallery" id="detail-gallery"></div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>Drawing light. Etching silicon. &nbsp;·&nbsp; &copy; 2026 Aitor López Hernández</p>
+  </footer>
+
+  <!-- highlight.js (correct CDN path) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/highlight.min.js" crossorigin="anonymous"></script>
+  <!-- KaTeX + auto-render -->
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <!-- Project data -->
+  <script src="../projects-data.js"></script>
+
+  <script>
+    // ── Mobile nav toggle ──────────────────────────────────────
+    const toggle   = document.querySelector('.nav-toggle');
+    const navLinks = document.getElementById('nav-links');
+    toggle.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!open));
+      navLinks.classList.toggle('open', !open);
+    });
+
+    // ── HTML escape utility ────────────────────────────────────
+    function escHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    // ── Render hero visual background ─────────────────────────
+    function renderHeroVisual(project) {
+      const bg = document.getElementById('project-hero-bg');
+      if (!bg) return;
+
+      if (project.cardVisual === 'gdsii') {
+        bg.className = 'project-hero-bg project-hero-bg--gdsii';
+        bg.innerHTML = '';   // chip ring drawn by CSS pseudo-elements
+
+      } else if (project.cardVisual === 'fdtd') {
+        bg.className = 'project-hero-bg project-hero-bg--fdtd';
+        bg.innerHTML = '';
+
+      } else if (project.cardVisual === 'code') {
+        bg.className = 'project-hero-bg project-hero-bg--code';
+        // Faded code snippet as texture on the right
+        bg.innerHTML = `<pre class="code-hero-pre" aria-hidden="true">${escHtml(project.codeSnippet || '')}</pre>`;
+      }
+    }
+
+    // ── Populate page from project data ───────────────────────
+    function renderProject(project) {
+      document.title = project.title + ' · PIC-asso';
+
+      document.getElementById('detail-badge').textContent  = project.type;
+      document.getElementById('detail-title').textContent  = project.title;
+
+      const toolEl = document.getElementById('detail-toolstack');
+      toolEl.innerHTML = project.toolstack
+        .map(t => `<span class="detail-tool-tag">${escHtml(t)}</span>`)
+        .join('');
+
+      // Hero visual
+      renderHeroVisual(project);
+
+      // Coming-soon banner
+      if (project.status === 'coming-soon') {
+        document.getElementById('detail-status-banner').style.display = 'flex';
+      }
+
+      // Overview paragraphs
+      document.getElementById('detail-overview').innerHTML = project.description
+        .map(p => `<p>${escHtml(p)}</p>`)
+        .join('');
+
+      // Code
+      if (project.codeSnippet) {
+        document.getElementById('detail-code').textContent = project.codeSnippet;
+      } else {
+        document.getElementById('detail-code-section').style.display = 'none';
+      }
+
+      // Equations
+      if (project.latex && project.latex.length > 0) {
+        document.getElementById('detail-equations').innerHTML = project.latex
+          .map(eq => `<div class="detail-equation">$$${eq}$$</div>`)
+          .join('');
+      } else {
+        document.getElementById('detail-equations-section').style.display = 'none';
+      }
+
+      // Gallery
+      if (project.imageGallery && project.imageGallery.length > 0) {
+        document.getElementById('detail-gallery-section').style.display = '';
+        document.getElementById('detail-gallery').innerHTML = project.imageGallery
+          .map(img => `<figure class="detail-gallery-item">
+            <img src="${escHtml(img.src)}" alt="${escHtml(img.alt)}" loading="lazy" />
+            <figcaption>${escHtml(img.alt)}</figcaption>
+          </figure>`)
+          .join('');
+      }
+    }
+
+    // ── Bootstrap ─────────────────────────────────────────────
+    (function init() {
+      const params  = new URLSearchParams(window.location.search);
+      const id      = params.get('id');
+
+      if (!id) { window.location.href = '/#projects'; return; }
+
+      const project = PROJECTS.find(p => p.id === id);
+      if (!project) { window.location.href = '/#projects'; return; }
+
+      renderProject(project);
+
+      // Syntax highlighting
+      if (typeof hljs !== 'undefined') hljs.highlightAll();
+
+      // KaTeX math rendering
+      if (typeof renderMathInElement !== 'undefined') {
+        renderMathInElement(document.body, {
+          delimiters: [
+            { left: '$$',  right: '$$',  display: true  },
+            { left: '\\(', right: '\\)', display: false },
+          ],
+          throwOnError: false,
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
