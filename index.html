@@ -569,8 +569,8 @@
       });
     });
 
-    // ── Typing animation for section titles ───────────────────
-    function typeWriter(el, text, speed = 52) {
+    // ── Typing animation ───────────────────────────────────────
+    function typeWriter(el, text, speed = 52, onComplete = null) {
       el.textContent = '';
       el.classList.add('is-typing');
       let i = 0;
@@ -581,12 +581,50 @@
         } else {
           el.classList.remove('is-typing');
           el.classList.add('done-typing');
+          if (onComplete) onComplete();
         }
       };
       tick();
     }
 
+    // ── Hero entrance sequence ─────────────────────────────────
+    function heroSequence() {
+      const eyebrow  = document.querySelector('.hero-eyebrow');
+      const heroName = document.querySelector('.hero-name');
+      const logo     = document.querySelector('.hero-logo-img');
+      const subtitle = document.querySelector('.hero-subtitle');
+      if (!eyebrow || !heroName || !logo || !subtitle) return;
+
+      const eyebrowText = eyebrow.textContent.trim();
+      const nameText    = heroName.textContent.trim();
+      eyebrow.textContent  = '';
+      heroName.textContent = '';
+
+      // 1. Fade in eyebrow container then type
+      setTimeout(() => {
+        eyebrow.style.opacity = '1';
+        typeWriter(eyebrow, eyebrowText, 58, () => {
+          // 2. Fade in name container then type
+          setTimeout(() => {
+            heroName.style.opacity = '1';
+            typeWriter(heroName, nameText, 68, () => {
+              // 3. Brush-reveal logo (left → right, like a paint stroke)
+              setTimeout(() => {
+                logo.classList.add('hero-logo--reveal');
+                // 4. Fade-rise subtitle — starts while logo is still fading in
+                setTimeout(() => {
+                  subtitle.classList.add('hero-subtitle--visible');
+                }, 1600);
+              }, 260);
+            });
+          }, 200);
+        });
+      }, 500);
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
+      heroSequence();
+
       const titles = document.querySelectorAll('.section-title');
       titles.forEach(el => {
         el.dataset.text = el.textContent.trim();
