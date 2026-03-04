@@ -110,7 +110,7 @@ def bent_dc(
     heroFullCover: true,
     cardImage: 'images/theater/Main_title.jpeg',
     preview: 'Brussels, 1927. Einstein vs Bohr. A young cleaner witnesses history. A drama about the Observer Effect \u2014 how the simple act of looking can change who we look at, or even ourselves.',
-    preamble: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
+    preamble: 'Release date TBD (by now only in Spanish)!',
     description: [
       'Brussels, 1927. The Hotel Metropole braces itself to host the most important gathering of minds in history: the Fifth Solvay Conference. In its grand halls, Albert Einstein and Niels Bohr wage an intellectual battle that will change our understanding of reality forever.',
       'Meanwhile, in its luxurious rooms, conspiracies flourish, fueled by the wounds of old conflicts. And, in the service corridors, a young cleaner, endowed with a curiosity forbidden to her social class, becomes the invisible witness to an avalanche of events that will shake her life and that of her younger sister.',
