@@ -40,6 +40,8 @@
     <div class="project-hero-bg" id="project-hero-bg" aria-hidden="true"></div>
     <!-- Dark left-to-right overlay -->
     <div class="project-hero-overlay" aria-hidden="true"></div>
+    <!-- Real device image — above overlay so it's not smothered by the dark gradient -->
+    <img class="project-hero-device-img" id="project-hero-device-img" src="" alt="" aria-hidden="true" style="display:none" />
     <!-- Text content -->
     <div class="project-hero-content">
       <a href="/#projects" class="project-detail-back">← Back to Projects</a>
@@ -59,6 +61,11 @@
         Full write-up &amp; results coming soon — the core code and equations are already here.
       </div>
 
+      <!-- Preamble (optional, shown before Overview) -->
+      <section class="detail-section" id="detail-preamble-section" style="display:none">
+        <div id="detail-preamble"></div>
+      </section>
+
       <!-- Overview -->
       <section class="detail-section" id="detail-overview-section">
         <h2>Overview</h2>
@@ -72,8 +79,8 @@
           <div class="detail-code-wrap">
             <pre><code class="language-python" id="detail-code"></code></pre>
           </div>
-          <!-- Straight waveguide layout view (placeholder) -->
-          <div class="detail-code-visual" aria-hidden="true">
+          <!-- Layout schematic view (populated by JS based on project.codeVisual) -->
+          <div class="detail-code-visual" id="detail-code-visual" aria-hidden="true">
             <div class="gdsii-bg-grid"></div>
             <div class="swg-wrap">
               <div class="swg-port"></div>
@@ -83,6 +90,12 @@
             <span class="swg-label">450 nm · WG · 220 nm SOI</span>
           </div>
         </div>
+      </section>
+
+      <!-- Characters (theater play) -->
+      <section class="detail-section" id="detail-characters-section" style="display:none">
+        <h2>Original Characters</h2>
+        <div class="detail-characters" id="detail-characters"></div>
       </section>
 
       <!-- Key Equations -->
@@ -131,10 +144,44 @@
         .replace(/"/g, '&quot;');
     }
 
+    // ── Typographic fixes ───────────────────────────────────────
+    // Prevent line break before '(' — opening parens should stay
+    // with the preceding word, not dangle at a line end.
+    function typeset(html) {
+      return html.replace(/ \(/g, '&nbsp;(');
+    }
+
     // ── Render hero visual background ─────────────────────────
     function renderHeroVisual(project) {
-      const bg = document.getElementById('project-hero-bg');
+      const bg     = document.getElementById('project-hero-bg');
+      const devImg = document.getElementById('project-hero-device-img');
       if (!bg) return;
+
+      // Reset device image
+      if (devImg) { devImg.style.display = 'none'; devImg.src = ''; }
+
+      // Full-cover hero image — fills entire hero background
+      if (project.heroImage && project.heroFullCover) {
+        bg.className = 'project-hero-bg project-hero-bg--fullcover';
+        bg.style.backgroundImage = `url('${project.heroImage}')`;
+        bg.innerHTML = '';
+        // Add modifier to hero wrapper for softer overlay
+        document.querySelector('.project-hero').classList.add('project-hero--fullcover');
+        return;
+      }
+
+      // Real device image — rendered as <img> above the overlay (z-index 2)
+      // so the dark overlay gradient does not smother it
+      if (project.heroImage) {
+        bg.className = 'project-hero-bg';
+        bg.style.backgroundImage = '';
+        bg.innerHTML = '';
+        if (devImg) {
+          devImg.src = project.heroImage;
+          devImg.style.display = '';
+        }
+        return;
+      }
 
       if (project.cardVisual === 'gdsii') {
         bg.className = 'project-hero-bg project-hero-bg--gdsii';
@@ -158,6 +205,15 @@
       document.getElementById('detail-badge').textContent  = project.type;
       document.getElementById('detail-title').textContent  = project.title;
 
+      // Update back link for off-chip projects
+      if (project.offchip) {
+        const backLink = document.querySelector('.project-detail-back');
+        if (backLink) {
+          backLink.href = '/#offchip';
+          backLink.textContent = '← Back to Off-Chip';
+        }
+      }
+
       const toolEl = document.getElementById('detail-toolstack');
       toolEl.innerHTML = project.toolstack
         .map(t => `<span class="detail-tool-tag">${escHtml(t)}</span>`)
@@ -171,16 +227,138 @@
         document.getElementById('detail-status-banner').style.display = 'flex';
       }
 
-      // Overview paragraphs
+      // Preamble (optional, shown before Overview without a heading)
+      if (project.preamble) {
+        document.getElementById('detail-preamble-section').style.display = '';
+        document.getElementById('detail-preamble').innerHTML =
+          `<p>${escHtml(project.preamble)}</p>`;
+      }
+
+      // Overview paragraphs — plain strings or {text, figure?} objects
       document.getElementById('detail-overview').innerHTML = project.description
-        .map(p => `<p>${escHtml(p)}</p>`)
+        .map(p => {
+          if (typeof p === 'string') {
+            return `<p>${typeset(escHtml(p))}</p>`;
+          }
+          if (!p.figure) {
+            return `<p>${typeset(escHtml(p.text))}</p>`;
+          }
+          // Standalone full-width figure (no adjacent text)
+          if (!p.text) {
+            return `<figure class="detail-fig-full">
+              <img src="${escHtml(p.figure.src)}"
+                   alt="${escHtml(p.figure.caption)}"
+                   loading="lazy"
+                   data-lightbox="${escHtml(p.figure.src)}" />
+              <figcaption>${escHtml(p.figure.caption)}</figcaption>
+            </figure>`;
+          }
+          // Float-right figure: image sits alongside text, next paragraph fills the gap
+          return `<div class="detail-para-group">
+            <figure class="detail-fig-float">
+              <img src="${escHtml(p.figure.src)}"
+                   alt="${escHtml(p.figure.caption)}"
+                   loading="lazy"
+                   data-lightbox="${escHtml(p.figure.src)}" />
+              <figcaption>${escHtml(p.figure.caption)}</figcaption>
+            </figure>
+            <p>${typeset(escHtml(p.text))}</p>
+          </div>`;
+        })
         .join('');
 
       // Code
       if (project.codeSnippet) {
         document.getElementById('detail-code').textContent = project.codeSnippet;
+        // Disable fade gradient when snippet is intentionally short (full interface shown)
+        if (project.noCodeGradient) {
+          document.querySelector('.detail-code-wrap').classList.add('detail-code-wrap--no-gradient');
+        }
       } else {
         document.getElementById('detail-code-section').style.display = 'none';
+      }
+
+      // Code visual panel — swap in device-specific schematic when available
+      const codeVisualEl = document.getElementById('detail-code-visual');
+      if (codeVisualEl && project.codeVisual === 'bentdc') {
+        codeVisualEl.innerHTML = `
+          <svg class="bentdc-svg" viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- GDSII grid -->
+            <defs>
+              <pattern id="bdc-grid" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M20,0 L0,0 0,20" fill="none" stroke="rgba(212,168,67,0.10)" stroke-width="0.5"/>
+              </pattern>
+            </defs>
+            <rect width="240" height="200" fill="#040406"/>
+            <rect width="240" height="200" fill="url(#bdc-grid)"/>
+
+            <!-- Coupling-region ambient glow -->
+            <ellipse cx="120" cy="93" rx="50" ry="12" fill="rgba(212,168,67,0.07)"/>
+
+            <!--
+              4-segment Bezier per waveguide.  All tangents horizontal at junctions.
+              Control points at sin²-smooth positions (36%/64% of each chord).
+
+              Upper WG (inner arc, port y=70):
+                S-bend:        (0,70)→(78,95)  — curves down toward coupling zone
+                Coupling arc:  (78,95)→(120,90) — bows UP  ← concentric
+                               (120,90)→(162,95)
+                S-bend:        (162,95)→(240,70) — curves back up to port
+
+              Lower WG (outer arc, port y=130):
+                S-bend:        (0,130)→(78,101) — curves up toward coupling zone
+                Coupling arc:  (78,101)→(120,96) — also bows UP  ← same direction = concentric
+                               (120,96)→(162,101)
+                S-bend:        (162,101)→(240,130) — curves back down to port
+
+              Gap: 101−95 = 6 SVG (coupling entry), 96−90 = 6 SVG (coupling centre). Constant ✓
+              Both waveguides bow upward in coupling zone → same-sign curvature → concentric arcs ✓
+            -->
+
+            <!-- Waveguide glow (wide, dim) -->
+            <path d="M0,70  C28,70  50,95  78,95  C93,95  105,90  120,90  C135,90  147,95  162,95  C190,95  212,70  240,70"
+                  stroke="rgba(212,168,67,0.18)" stroke-width="12" fill="none" stroke-linecap="round"/>
+            <path d="M0,130 C28,130 50,101 78,101 C93,101 105,96  120,96  C135,96  147,101 162,101 C190,101 212,130 240,130"
+                  stroke="rgba(212,168,67,0.18)" stroke-width="12" fill="none" stroke-linecap="round"/>
+
+            <!-- Waveguide cores -->
+            <path d="M0,70  C28,70  50,95  78,95  C93,95  105,90  120,90  C135,90  147,95  162,95  C190,95  212,70  240,70"
+                  stroke="rgba(212,168,67,0.90)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+            <path d="M0,130 C28,130 50,101 78,101 C93,101 105,96  120,96  C135,96  147,101 162,101 C190,101 212,130 240,130"
+                  stroke="rgba(212,168,67,0.90)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+
+            <!-- Port markers — input side -->
+            <line x1="0" y1="62" x2="0" y2="78"  stroke="rgba(212,168,67,0.55)" stroke-width="2"/>
+            <line x1="0" y1="122" x2="0" y2="138" stroke="rgba(212,168,67,0.55)" stroke-width="2"/>
+            <!-- Port markers — output side -->
+            <line x1="240" y1="62" x2="240" y2="78"  stroke="rgba(212,168,67,0.55)" stroke-width="2"/>
+            <line x1="240" y1="122" x2="240" y2="138" stroke="rgba(212,168,67,0.55)" stroke-width="2"/>
+
+            <!-- Coupling arc bracket -->
+            <rect x="78" y="84" width="84" height="23" rx="2"
+                  fill="none" stroke="rgba(212,168,67,0.28)" stroke-width="0.75" stroke-dasharray="3 2"/>
+
+            <!-- Labels -->
+            <text x="120" y="80"  fill="rgba(212,168,67,0.50)" font-size="6.5" font-family="monospace"
+                  text-anchor="middle" letter-spacing="0.5">gap = 100 nm</text>
+            <text x="120" y="185" fill="rgba(212,168,67,0.45)" font-size="6.5" font-family="monospace"
+                  text-anchor="middle" letter-spacing="0.5">380 nm · R = 25 µm · 220 nm SOI</text>
+
+            <!-- Arrow heads (light direction →) -->
+            <polygon points="14,70 6,67 6,73" fill="rgba(212,168,67,0.55)"/>
+            <polygon points="14,130 6,127 6,133" fill="rgba(212,168,67,0.55)"/>
+          </svg>`;
+      }
+
+      // Characters
+      if (project.characters && project.characters.length > 0) {
+        document.getElementById('detail-characters-section').style.display = '';
+        document.getElementById('detail-characters').innerHTML = project.characters
+          .map(ch => `<div class="detail-character">
+            <h3 class="detail-character-name">${escHtml(ch.name)}</h3>
+            <p class="detail-character-role">${escHtml(ch.role)}</p>
+          </div>`)
+          .join('');
       }
 
       // Equations
@@ -197,8 +375,9 @@
         document.getElementById('detail-gallery-section').style.display = '';
         document.getElementById('detail-gallery').innerHTML = project.imageGallery
           .map(img => `<figure class="detail-gallery-item">
-            <img src="${escHtml(img.src)}" alt="${escHtml(img.alt)}" loading="lazy" />
-            <figcaption>${escHtml(img.alt)}</figcaption>
+            <img src="${escHtml(img.src)}" alt="${escHtml(img.alt || '')}" loading="lazy"
+                 data-lightbox="${escHtml(img.src)}" style="cursor:zoom-in" />
+            ${img.alt ? `<figcaption>${escHtml(img.alt)}</figcaption>` : ''}
           </figure>`)
           .join('');
       }
@@ -229,6 +408,45 @@
           throwOnError: false,
         });
       }
+    })();
+
+    // ── Lightbox ───────────────────────────────────────────────
+    (function () {
+      const overlay = document.createElement('div');
+      overlay.className = 'lightbox-overlay';
+      overlay.innerHTML = '<span class="lightbox-close" aria-label="Close">×</span><img class="lightbox-img" src="" alt="" />';
+      document.body.appendChild(overlay);
+
+      const lbImg   = overlay.querySelector('.lightbox-img');
+      const lbClose = overlay.querySelector('.lightbox-close');
+
+      function open(src, alt) {
+        lbImg.src = src;
+        lbImg.alt = alt || '';
+        overlay.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function close() {
+        overlay.classList.remove('is-open');
+        document.body.style.overflow = '';
+        lbImg.src = '';
+      }
+
+      // Open on any img[data-lightbox] click
+      document.addEventListener('click', e => {
+        const img = e.target.closest('img[data-lightbox]');
+        if (img) open(img.dataset.lightbox, img.alt);
+      });
+
+      // Close on overlay background or × button
+      overlay.addEventListener('click', e => {
+        if (e.target === overlay || e.target === lbClose) close();
+      });
+
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') close();
+      });
     })();
   </script>
 </body>

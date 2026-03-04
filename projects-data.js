@@ -5,122 +5,132 @@
 ──────────────────────────────────────────────────────────────── */
 const PROJECTS = [
   {
-    id: 'ring-resonator-filter',
-    title: 'Project 1',
-    type: 'GDSII Layout',
-    cardVisual: 'gdsii',
-    cardBadge: '220 nm SOI',
-    preview: 'Placeholder text',
-    description: [
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    ],
-    toolstack: ['GDSFactory', 'KLayout', 'Cornerstone PDK'],
-    codeSnippet: `import gdsfactory as gf
-
-@gf.cell
-def straight_waveguide(
-    length: float = 10.0,
-    width: float = 0.45,
-) -> gf.Component:
-    """Placeholder — straight waveguide on 220 nm SOI."""
-    c = gf.Component()
-
-    wg = c << gf.components.straight(
-        length=length,
-        cross_section=gf.cross_section.strip(width=width),
-    )
-
-    c.add_ports(wg.get_ports_list())
-    return c
-
-
-if __name__ == "__main__":
-    c = straight_waveguide()
-    c.show()
-    c.write_gds("straight_wg.gds")`,
-    imageGallery: [],
-    latex: ['x = y'],
-    status: 'coming-soon',
-  },
-
-  {
     id: 'fdtd-directional-coupler',
-    title: 'Project 2',
+    title: 'Broadband Bent Directional Coupler',
     type: 'FDTD Simulation',
     cardVisual: 'fdtd',
-    cardBadge: '3D FDTD',
-    preview: 'Placeholder text',
+    cardBadge: 'O-band · 3D FDTD',
+    heroImage: '../images/bentdc/bentdc_efield_hero.png',
+    cardImage: 'images/bentdc/bentdc_efield_hero.png',
+    preview: 'Does replacing the straight coupling section with a curved arc really flatten coupling across wavelength? A 75-sim Tidy3D investigation — spanning two wavelength bands and two compact models — finds out.',
     description: [
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      'A directional coupler (DC) is one of the most fundamental building blocks in silicon photonics: two waveguides placed nanometres apart exchange optical power through evanescent coupling. The coupling ratio depends strongly on wavelength, which limits the useful bandwidth of DC-based devices such as 50:50 splitters, MZI arms, and wavelength-selective switches. A 2024 paper (arXiv:2404.06117) proposes a simple geometric fix: replace the straight coupling section with a symmetric arc. By linking the average propagation constant of the light (\\(\\bar{\\beta}\\)) with the specific physical footprint — the center-to-center waveguide spacing defined by the gap (\\(g\\)) and waveguide width (\\(w\\)), relative to the arc\'s bending radius (\\(R\\)) — the arc introduces a bending-induced phase mismatch \\(\\Delta\\beta = \\bar{\\beta}\\,(g+w)/R\\) between the two arms that, in theory, partially cancels the material dispersion and flattens the coupling ratio. On the IMEC iSiPP300 platform, the authors report a 7.67× reduction in coupling variation over an 80 nm O-band window.',
+      'This study reproduces and stress-tests that claim using open-source PDK materials — Li1993 crystalline Si and Horiba SiO₂ — on the same 220 nm SOI stack. Three investigation paths were executed at O-band (\\(w\\) = 380 nm, λ = 1310 nm): a full 3D FDTD angle sweep at (\\(R\\)) = 25 µm, (\\(g\\)) = 100 nm over θ = 1–16° to locate the 50:50 design point (Path 1); a grid optimisation over (\\(R\\), θ) with \\(R\\) ∈ {15, 20, 25, 30} µm to check whether a different radius activates the broadband mechanism (Path 2); and a zero-cost 2D FEM cross-section sweep over 48 (\\(w\\), \\(g\\)) combinations using FemWell to explore whether cross-section engineering unlocks the effect (Path 3). A parallel C-band study (\\(w\\) = 500 nm, λ = 1550 nm) tested the same architecture at the standard telecom geometry and exposed an additional bending-phase-mismatch constraint. Across both bands, the FDTD results were distilled into SAX compact models for circuit-level simulation.',
+      {
+        figure: {
+          src: '../images/bentdc/plot_BentDC_efield_composite_20260302_1152.png',
+          caption: 'Fig. 1 — |E|² field maps at the Si mid-plane (z = 0.11 µm, λ = 1310 nm) spanning the accessible coupling range of the BentDC (R = 25 µm, gap = 100 nm). Left to right: θ = 1° (T_cross ≈ 17%, mostly-through) → θ = 8.5° (50:50 design point) → θ = 12° (T_cross ≈ 62%) → θ = 16° (T_cross ≈ 66%, near the first sin² maximum). The progressive transfer of power from the input waveguide into its neighbour follows the CMT prediction T_cross = F sin²(κRθ).',
+        },
+      },
+      {
+        text: 'Path 1 results: the 50:50 design point is confirmed at θ = 8.5° (Fig. 2), in quantitative agreement with the paper\'s Fig. 4. This aligns with the standard Coupled-Mode Theory (CMT) prediction for cross-transmission, \\(T_{\\text{cross}} = F\\sin^2\\!(\\kappa R\\theta)\\), where \\(F\\) represents the maximum power transfer efficiency dictated by the phase mismatch, and \\(\\kappa\\) is the coupling coefficient. However, the broadband performance fails to replicate. The coupling variation across the wavelength window, defined as \\(\\Delta T \\equiv \\max_\\lambda T_{\\text{cross}} - \\min_\\lambda T_{\\text{cross}}\\), is calculated to be 0.266 (Fig. 5), which is nearly identical to the straight DC baseline (0.265). The geometric phase compensation simply does not activate with the public PDK\'s Si dispersion data. The root cause is the difference in dn/dλ between IMEC\'s proprietary silicon model and the Li1993 fit at 1310 nm: the arc geometry was tuned to compensate a specific slope, and with a different slope, the compensation is off by design.',
+        figure: {
+          src: '../images/bentdc/plot_BentDC_fig4_anglesweep_20260228_0140.png',
+          caption: 'Fig. 2 — T_cross and T_bar vs coupling angle θ at 1310 nm — FDTD sweep (blue/red) and CMT fit (orange). The 50:50 crossing falls at θ ≈ 8.4°, reproducing paper Fig. 4.',
+        },
+      },
+      {
+        text: 'Path 2 confirms the finding is not radius-dependent (Fig. 3). Across \\(R\\) = 20–30 µm, \\(\\Delta T\\) at the 50:50 point varies by only 3.2% — the parameter landscape is nearly flat. The optimal radius under Li1993/Horiba is \\(R\\) = 20 µm, θ = 11.4°, giving \\(\\Delta T\\) = 0.259, a marginal 2.2% improvement over \\(R\\) = 25 µm. Geometry alone cannot recover the 7.67× improvement reported on IMEC materials. The broadband mechanism is material-locked.',
+        figure: {
+          src: '../images/bentdc/plot_BentDC_Rtheta_landscape_20260228_1552.png',
+          caption: 'Fig. 3 — ΔT at the 50:50 point vs bend radius R (left) and design angle θ* vs R (right). ΔT varies by only 3.2% across R = 20–30 µm — the landscape is essentially flat.',
+        },
+      },
+      {
+        text: 'Path 3 identifies a partial workaround (Fig. 4). A FemWell 2D supermode sweep over (\\(w, g\\)) shows that narrower waveguides at tighter gaps increase the coupling coefficient κ and shorten the 50:50 arc length, reducing the propagation distance over which chromatic dispersion accumulates. The best cross-section found — \\(w\\) = 280 nm, \\(g\\) = 80 nm — achieves \\(\\Delta T\\) = 0.138, a 1.8× improvement over the reference geometry. This is a coupling-length reduction effect, not the active phase-mismatch cancellation, but it is a real and practical route to broadening the DC bandwidth without proprietary material data. However, it is important to note that an 80 nm gap pushes the resolution limits of standard DUV lithography and makes the directional coupler exceptionally vulnerable to sub-nanometer fabrication tolerances.',
+        figure: {
+          src: '../images/bentdc/plot_BentDC_path3_landscape_20260301_1404.png',
+          caption: 'Fig. 4 — FemWell cross-section sweep over 48 (w, gap) combinations. Left: ΔT at the 50:50 design point (grey = unreachable). Centre: coupling coefficient κ at 1310 nm. Right: F_max = (κ/Ω)². Best cross-section: w = 280 nm, gap = 80 nm → ΔT = 0.138.',
+        },
+      },
+      'To close the workflow into a circuit-design-ready deliverable, two SAX compact models were trained on the FDTD data at the fabrication-safe gap of 200 nm — well within the minimum feature size of standard deep-UV SOI processes, unlike the paper\'s lithography-limited 100 nm nominal. The O-band model (Fig. 6) covers a 4 × 5 grid over \\(R\\) ∈ {20, 25, 30, 35} µm and θ ∈ {6, 10, 14, 18, 22}°; \\(T_{\\text{cross}}\\) peaks at 0.22 within the training domain, with the 50:50 contour lying beyond the explored radius range at this gap. The C-band model (Fig. 7, \\(w\\) = 500 nm, λ = 1550 nm) — the canonical single-mode width on 220 nm SOI — benefits from stronger evanescent coupling, shifting the 50:50 contour to accessible radii of R ≈ 100–150 µm (θ ≈ 5–9°). However, near the 50:50 operating point the coupling variation \\(\\Delta T\\) ≈ 0.34 is essentially identical to the C-band straight DC baseline (0.334), confirming the material-lock effect observed at O-band holds at the standard telecom cross-section as well. Both models are wrapped as SAX SDict functions mapping any (\\(R\\), θ, λ) to a full S-matrix via tri-linear interpolation, enabling MZI tree, ring lattice, and WDM router simulations at zero additional cloud cost.',
     ],
-    toolstack: ['Tidy3D', 'Lumerical', 'Python'],
-    codeSnippet: `import gdsfactory as gf
-
-@gf.cell
-def straight_waveguide(
-    length: float = 10.0,
-    width: float = 0.45,
+    toolstack: ['Tidy3D', 'GDSFactory', 'gplugins', 'FemWell', 'SAX', 'Python'],
+    codeVisual: 'bentdc',
+    noCodeGradient: true,
+    codeSnippet: `@gf.cell
+def bent_dc(
+    wg_width: float = 0.38,      # 380 nm Si strip  (O-band single-mode)
+    gap: float      = 0.10,      # 100 nm coupling gap
+    R_inner: float  = 25.0,      # inner bend radius [µm]
+    theta_deg: float = 8.5,      # coupling arc half-angle [°]
+    device_length: float = 27.5,
+    port_pitch: float    = 5.0,
+    layer: str           = "WG",
 ) -> gf.Component:
-    """Placeholder — straight waveguide on 220 nm SOI."""
-    c = gf.Component()
+    """Broadband Bent Directional Coupler (arXiv:2404.06117).
 
-    wg = c << gf.components.straight(
-        length=length,
-        cross_section=gf.cross_section.strip(width=width),
-    )
+    Replaces the straight coupling region with a symmetric arc.
+    S-bends are generated analytically for C¹ curvature continuity.
+    50:50 design point on gpdk: θ = 8.5°, R = 25 µm, gap = 100 nm.
+    """
+    # ...
+    return c`,
+    imageGallery: [
+      {
+        src: '../images/bentdc/plot_BentDC_theta8p5_detail_20260228_0140.png',
+        alt: 'Fig. 5 — T_cross and T_bar vs wavelength at the 50:50 design point (θ = 8.5°, R = 25 µm, gap = 100 nm). Coupling variation ΔT = 0.266 over 80 nm — near-identical to the straight DC baseline (0.265), confirming the broadband mechanism is inoperative with Li1993/Horiba dispersion.',
+      },
+      {
+        src: '../images/bentdc/plot_BentDC_compact_model_200nm_heatmap_20260228_0210.png',
+        alt: 'Fig. 6 — O-band compact model: T_cross(R, θ) at λ = 1310 nm, gap = 200 nm, trained on 20 FDTD-validated points (black +). Maximum T_cross = 0.22 within the domain — the 50:50 contour lies beyond the explored radius range at this fabrication-safe gap.',
+      },
+      {
+        src: '../images/bentdc/plot_BentDC500nm_CM_heatmap_20260303_2258.png',
+        alt: 'Fig. 7 — C-band compact model (500 nm): T_cross(R, θ) at λ = 1550 nm, gap = 200 nm. The 50:50 contour (white dashed) runs from R ≈ 150 µm at θ = 5° to R ≈ 100 µm at θ ≈ 9° — stronger evanescent coupling at 500 nm shifts it to accessible radii, but ΔT near 50:50 remains ≈ 0.34, confirming the material-lock.',
+      },
+    ],
+    latex: [],
+  },
 
-    c.add_ports(wg.get_ports_list())
-    return c
-
-
-if __name__ == "__main__":
-    c = straight_waveguide()
-    c.show()
-    c.write_gds("straight_wg.gds")`,
+  {
+    id: 'linbo3-modulator',
+    title: 'Design of a LiNbO\u2083 Modulator',
+    type: 'FDTD Simulation',
+    cardVisual: 'fdtd',
+    cardBadge: 'LiNbO\u2083 · 3D FDTD',
+    preview: 'Coming soon.',
+    description: [
+      'Details coming soon.',
+    ],
+    toolstack: ['Tidy3D', 'GDSFactory', 'Python'],
+    codeSnippet: '',
     imageGallery: [],
-    latex: ['x = y'],
+    latex: [],
     status: 'coming-soon',
   },
 
   {
-    id: 'parametric-filter-library',
-    title: 'Project 3',
-    type: 'Routing Script',
-    cardVisual: 'code',
-    cardBadge: 'GDSFactory',
-    preview: 'Placeholder text',
+    id: 'theater-play',
+    title: 'Solvay',
+    type: 'Theater Play',
+    cardVisual: 'fdtd',
+    cardBadge: 'Registered Work',
+    heroImage: '../images/theater/Solvay_conference_1927.jpg',
+    heroFullCover: true,
+    cardImage: 'images/theater/Main_title.jpeg',
+    preview: 'Brussels, 1927. Einstein vs Bohr. A young cleaner witnesses history. A drama about the Observer Effect \u2014 how the simple act of looking can change who we look at, or even ourselves.',
+    preamble: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
     description: [
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      'Brussels, 1927. The Hotel Metropole braces itself to host the most important gathering of minds in history: the Fifth Solvay Conference. In its grand halls, Albert Einstein and Niels Bohr wage an intellectual battle that will change our understanding of reality forever.',
+      'Meanwhile, in its luxurious rooms, conspiracies flourish, fueled by the wounds of old conflicts. And, in the service corridors, a young cleaner, endowed with a curiosity forbidden to her social class, becomes the invisible witness to an avalanche of events that will shake her life and that of her younger sister.',
+      'Solvay is not just a play about physics; it is a drama about the "Observer Effect": how the simple act of looking can change who we look at, or even ourselves. A story that travels between 1927 and 1950 to answer the ultimate question: Does God play dice with our lives?',
     ],
-    toolstack: ['GDSFactory', 'Python', 'SAX'],
-    codeSnippet: `import gdsfactory as gf
-
-@gf.cell
-def straight_waveguide(
-    length: float = 10.0,
-    width: float = 0.45,
-) -> gf.Component:
-    """Placeholder — straight waveguide on 220 nm SOI."""
-    c = gf.Component()
-
-    wg = c << gf.components.straight(
-        length=length,
-        cross_section=gf.cross_section.strip(width=width),
-    )
-
-    c.add_ports(wg.get_ports_list())
-    return c
-
-
-if __name__ == "__main__":
-    c = straight_waveguide()
-    c.show()
-    c.write_gds("straight_wg.gds")`,
-    imageGallery: [],
-    latex: ['x = y'],
-    status: 'coming-soon',
+    characters: [
+      { name: 'Juliette Dumond', role: 'Metropole Hotel Cleaner. Corvette`s sister. Tremendously curious and intelligent, but with no formal education.' },
+      { name: 'Corvette Dumond', role: 'Metropole Hotel Cleaner. Juliette`s sister. A dreamer, naive, and deeply in love with her beau, Herman.' },
+      { name: 'Herman Schneider', role: 'German Army Officer. Corvette`s partner. Handsome, with impeccable manners and martial discipline.' },
+      { name: 'Gabriel Mertens', role: 'Metropole Staff Manager. A lover of protocol, strict with the service, and comically fawning with the guests..' },
+    ],
+    toolstack: ['Drama', 'Historical Fiction', '1927\u20131950'],
+    codeSnippet: '',
+    imageGallery: [
+      { src: '../images/theater/Main_title.jpeg', alt: '' },
+      { src: '../images/theater/Einstein_and_Bohr.jpeg', alt: '' },
+      { src: '../images/theater/Corvette_and_Herman.jpeg', alt: '' },
+      { src: '../images/theater/Mertens_with_employees.png', alt: '' },
+    ],
+    latex: [],
+    offchip: true,
   },
 ];

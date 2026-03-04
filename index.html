@@ -260,7 +260,7 @@
     <div class="container">
       <h2 class="section-title">Constructive Interference</h2>
       <p class="section-tag">(Projects &amp; Layouts)</p>
-      <p class="section-intro">A sample of my work — from raw GDSII geometry to electromagnetic field plots and the Python that generates them. Full write-ups coming soon!</p>
+      <p class="section-intro">A sample of my work — from raw GDSII geometry to electromagnetic field plots and the Python that generates them.</p>
       <div class="projects-grid" id="projects-grid">
         <!-- dynamically rendered by JS from projects-data.js -->
       </div><!-- /projects-grid -->
@@ -381,11 +381,12 @@
           <p>Firmly in the "cooking is applied chemistry" camp. Sourdough, slow-fermented stocks, the occasional over-ambitious Spanish recipe. Reproducible results not guaranteed.</p>
         </div>
 
-        <div class="hobby-card">
+        <a href="/projects/?id=theater-play" class="hobby-card hobby-card--clickable">
           <span class="hobby-icon">🎭</span>
           <h3>Writing</h3>
-          <p>Because work reports are not always the most enjoyable tasks to handle, I became the proud author of a newly registered theater play. Details coming soon!</p>
-        </div>
+          <p>Because work reports are not always the most enjoyable tasks to handle, I became the proud author of a newly registered theater play. Click to learn more!</p>
+          <span class="hobby-card-cta">View Project →</span>
+        </a>
 
         <div class="hobby-card">
           <span class="hobby-icon">🌍</span>
@@ -596,13 +597,17 @@
         </div>`;
       }
       if (p.cardVisual === 'fdtd') {
-        return `<div class="project-card-visual fdtd-visual" aria-hidden="true">
-          <div class="fdtd-field"></div>
+        const fieldEl = p.cardImage
+          ? `<img class="fdtd-img" src="${escHtml(p.cardImage)}" alt="" loading="lazy" />`
+          : `<div class="fdtd-field"></div>`;
+        const legendEl = p.cardImage ? '' : `
           <div class="fdtd-legend">
             <span class="fdtd-label">−|E|</span>
             <div class="fdtd-colorbar"></div>
             <span class="fdtd-label">+|E|</span>
-          </div>
+          </div>`;
+        return `<div class="project-card-visual fdtd-visual" aria-hidden="true">
+          ${fieldEl}${legendEl}
         </div>`;
       }
       if (p.cardVisual === 'code') {
@@ -626,7 +631,7 @@
       const grid = document.getElementById('projects-grid');
       if (!grid || typeof PROJECTS === 'undefined') return;
 
-      grid.innerHTML = PROJECTS.map(p => {
+      grid.innerHTML = PROJECTS.filter(p => !p.offchip).map(p => {
         const tags = p.toolstack
           .map(t => `<span>${escHtml(t)}</span>`)
           .join('');
@@ -645,7 +650,7 @@
           </div>
           <div class="project-card-body">
             <h3>${escHtml(p.title)}</h3>
-            <p>Full write-up coming soon!</p>
+            ${p.status === 'coming-soon' ? '<span class="card-coming-soon-label">Coming soon</span>' : ''}
             <div class="project-tags">${tags}</div>
           </div>
         </a>`;
@@ -662,7 +667,7 @@
 
       const allLink = `<li role="menuitem"><a class="nav-dropdown-link" href="#projects">All Projects</a></li>`;
       const divider = `<li class="nav-dropdown-divider" role="separator"></li>`;
-      const projectLinks = PROJECTS.map(p =>
+      const projectLinks = PROJECTS.filter(p => !p.offchip).map(p =>
         `<li role="menuitem"><a class="nav-dropdown-link" href="/projects/?id=${escHtml(p.id)}">${escHtml(p.title)}</a></li>`
       ).join('');
 
