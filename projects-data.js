@@ -105,9 +105,9 @@ def bent_dc(
     title: 'HablaIA',
     type: 'Telegram Bot',
     cardVisual: 'code',
-    cardBadge: 'Live Beta · @hablaiabot',
+    cardBadge: 'Live Beta · @habla_ia_bot',
     preview: 'An AI language tutor that lives inside Telegram. No app to install — just daily structured lessons powered by Claude, in 7 languages.',
-    preamble: 'Now in public beta — start learning at @hablaiabot on Telegram.',
+    preamble: 'Now in public beta — start learning at @habla_ia_bot on Telegram.',
     description: [
       'HablaIA is a language-learning bot built for people who want to make real progress without adding another app to their life. It lives inside Telegram and delivers a complete daily lesson — SRS flashcard review, a grammar drill, a roleplay conversation, and new vocabulary cards — all powered by Anthropic\'s Claude model.',
       'The core insight is that friction kills habits. Telegram is already open; switching to a dedicated app rarely happens. HablaIA removes that switch entirely. A lesson takes 5–10 minutes and can be started with a single tap from any device.',
@@ -138,7 +138,7 @@ async def cmd_lesson(update, context):
     tos: [
       {
         title: 'Service',
-        text: 'HablaIA (@hablaiabot) is an AI-powered language learning service delivered via Telegram, operated by Aitor López Hernández. By using the bot you agree to these terms. Contact: @pic_asso on Telegram.',
+        text: 'HablaIA (@habla_ia_bot) is an AI-powered language learning service delivered via Telegram, operated by Aitor López Hernández. By using the bot you agree to these terms. Contact: @pic_asso on Telegram.',
       },
       {
         title: 'Subscriptions & Billing',
