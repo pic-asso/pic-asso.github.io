@@ -394,12 +394,11 @@
       <p class="section-intro">Life outside the fab — because the best engineers bring the whole person to work.</p>
       <div class="hobbies-grid">
 
-        <a href="/blablia/" class="hobby-card hobby-card--clickable">
+        <div class="hobby-card">
           <span class="hobby-icon">🗣️</span>
           <h3>Language Learning</h3>
-          <p>Built Blablia — an AI language tutor that lives inside Telegram. Currently learning Polish myself; German is next. Click to learn more (and try it).</p>
-          <span class="hobby-card-cta">View more →</span>
-        </a>
+          <p>Currently pushing my Polish and fascinated by Slavic morphology — it's a different kind of pattern recognition. German is next on the list.</p>
+        </div>
 
         <div class="hobby-card">
           <span class="hobby-icon">🍳</span>
@@ -706,8 +705,8 @@
 
       const allLink = `<li role="menuitem"><a class="nav-dropdown-link" href="#offchip">All Off-Chip</a></li>`;
       const divider = `<li class="nav-dropdown-divider" role="separator"></li>`;
-      const offchipLinks = PROJECTS.filter(p => p.offchip).map(p =>
-        `<li role="menuitem"><a class="nav-dropdown-link" href="${p.id === 'blablia' ? '/blablia/' : '/projects/?id=' + escHtml(p.id)}">${escHtml(p.title)}</a></li>`
+      const offchipLinks = PROJECTS.filter(p => p.offchip && p.id !== 'blablia').map(p =>
+        `<li role="menuitem"><a class="nav-dropdown-link" href="/projects/?id=${escHtml(p.id)}">${escHtml(p.title)}</a></li>`
       ).join('');
 
       dropdown.innerHTML = allLink + divider + offchipLinks;
