@@ -311,6 +311,44 @@
     }
 
     /* ── Lesson types ───────────────────────────────────── */
+    /* ── Compare section ── */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 32px;
+    }
+    @media (max-width: 600px) { .compare-grid { grid-template-columns: 1fr; } }
+
+    .compare-card {
+      border-radius: var(--radius);
+      padding: 28px 24px;
+    }
+    .compare-card h3 {
+      font-size: .9rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .compare-card ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .compare-card li { font-size: .88rem; line-height: 1.5; }
+
+    .compare-other {
+      background: #13131a;
+      border: 1px solid #2a2a3a;
+      color: #64748b;
+    }
+    .compare-other h3 { color: #475569; }
+    .compare-other li::before { content: "✕  "; color: #374151; }
+
+    .compare-habla {
+      background: rgba(124,58,237,0.08);
+      border: 1px solid rgba(124,58,237,0.3);
+      color: #cbd5e1;
+    }
+    .compare-habla h3 { color: #a78bfa; }
+
     .lesson-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -539,8 +577,8 @@
     <div class="hero-icon">🗣️</div>
     <h1>HablaIA</h1>
     <p class="hero-tagline">
-      An <strong>AI language tutor</strong> that lives inside Telegram.<br>
-      No app to install. Just open a chat and start your lesson.
+      Tried Duolingo. Still can't speak?<br>
+      <strong>HablaIA is built differently.</strong>
     </p>
     <div class="hero-actions">
       <a href="https://t.me/habla_ia_bot" class="btn-primary" target="_blank" rel="noopener">
@@ -559,6 +597,39 @@
     <span class="badge">A1 → C1 placement test</span>
     <span class="badge">Public beta</span>
   </div>
+
+  <!-- ── Duolingo comparison ──────────────────────────────────── -->
+  <section class="section">
+    <div class="section-label">A different approach</div>
+    <h2 class="section-title">Most apps train streaks.<br>HablaIA trains conversations.</h2>
+    <p class="section-intro">
+      Duolingo is great at one thing: keeping you tapping. But 37% of its users
+      quit every month — and those who stay rarely achieve conversational ability.
+      The problem isn't the habit. It's what the habit consists of.
+    </p>
+    <div class="compare-grid">
+      <div class="compare-card compare-other">
+        <h3>Typical language apps</h3>
+        <ul>
+          <li>Tap-to-match and fill-in-the-blank</li>
+          <li>No grammar explanation — just pattern exposure</li>
+          <li>No speaking or conversation practice</li>
+          <li>Fixed content regardless of your level</li>
+          <li>Optimised for daily active users, not fluency</li>
+        </ul>
+      </div>
+      <div class="compare-card compare-habla">
+        <h3>HablaIA</h3>
+        <ul>
+          <li>✓ Grammar explained, practised, and tested</li>
+          <li>✓ AI conversation roleplay every session</li>
+          <li>✓ Spaced repetition that actually sticks</li>
+          <li>✓ Adapts to your CEFR level from day one</li>
+          <li>✓ Designed to make you speak, not scroll</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
   <!-- ── Why Telegram ─────────────────────────────────────────── -->
   <section class="section">
