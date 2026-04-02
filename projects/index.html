@@ -415,7 +415,7 @@
 
       const allLink = `<li role="menuitem"><a class="nav-dropdown-link" href="/#offchip">All Off-Chip</a></li>`;
       const divider = `<li class="nav-dropdown-divider" role="separator"></li>`;
-      const offchipLinks = PROJECTS.filter(p => p.offchip && p.id !== 'blablia').map(p =>
+      const offchipLinks = PROJECTS.filter(p => p.offchip && p.id !== 'habla-ia').map(p =>
         `<li role="menuitem"><a class="nav-dropdown-link" href="/projects/?id=${escHtml(p.id)}">${escHtml(p.title)}</a></li>`
       ).join('');
 
