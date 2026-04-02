@@ -98,12 +98,13 @@
 
     .hero-icon {
       width: 72px; height: 72px;
-      background: linear-gradient(135deg, var(--purple), var(--blue));
       border-radius: 20px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 36px;
       margin: 0 auto 24px;
-      box-shadow: 0 0 50px rgba(124,58,237,0.45);
+      overflow: hidden;
+      box-shadow: 0 0 50px rgba(124,58,237,0.35);
+    }
+    .hero-icon img {
+      width: 100%; height: 100%; object-fit: cover;
     }
 
     .hero h1 {
@@ -574,7 +575,7 @@
 
   <!-- ── Hero ─────────────────────────────────────────────────── -->
   <header class="hero">
-    <div class="hero-icon">🗣️</div>
+    <div class="hero-icon"><img src="logo.png" alt="HablaIA logo"></div>
     <h1>HablaIA</h1>
     <p class="hero-tagline">
       Tried Duolingo. Still can't speak?<br>
