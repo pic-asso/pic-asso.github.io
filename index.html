@@ -32,7 +32,15 @@
           </ul>
         </li>
         <li><a href="#pdk"      class="nav-link">PDK</a></li>
-        <li><a href="#offchip"  class="nav-link">Off-Chip</a></li>
+        <li class="nav-item-dropdown">
+          <a href="#offchip" class="nav-link nav-link--has-dropdown" id="offchip-nav-link" aria-haspopup="true" aria-expanded="false">
+            Off-Chip
+            <svg class="dropdown-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="1 1 5 5 9 1"/></svg>
+          </a>
+          <ul class="nav-dropdown" id="nav-dropdown-offchip" role="menu">
+            <!-- populated by JS -->
+          </ul>
+        </li>
         <li><a href="#connect"  class="nav-link">Connect</a></li>
       </ul>
     </div>
@@ -386,11 +394,12 @@
       <p class="section-intro">Life outside the fab — because the best engineers bring the whole person to work.</p>
       <div class="hobbies-grid">
 
-        <div class="hobby-card">
+        <a href="/blablia/" class="hobby-card hobby-card--clickable">
           <span class="hobby-icon">🗣️</span>
           <h3>Language Learning</h3>
-          <p>Currently pushing my Polish and fascinated by Slavic morphology — it's a different kind of pattern recognition. German is next on the list.</p>
-        </div>
+          <p>Built Blablia — an AI language tutor that lives inside Telegram. Currently learning Polish myself; German is next. Click to learn more (and try it).</p>
+          <span class="hobby-card-cta">View more →</span>
+        </a>
 
         <div class="hobby-card">
           <span class="hobby-icon">🍳</span>
@@ -691,10 +700,24 @@
       dropdown.innerHTML = allLink + divider + projectLinks;
     }
 
+    function populateOffchipDropdown() {
+      const dropdown = document.getElementById('nav-dropdown-offchip');
+      if (!dropdown || typeof PROJECTS === 'undefined') return;
+
+      const allLink = `<li role="menuitem"><a class="nav-dropdown-link" href="#offchip">All Off-Chip</a></li>`;
+      const divider = `<li class="nav-dropdown-divider" role="separator"></li>`;
+      const offchipLinks = PROJECTS.filter(p => p.offchip).map(p =>
+        `<li role="menuitem"><a class="nav-dropdown-link" href="${p.id === 'blablia' ? '/blablia/' : '/projects/?id=' + escHtml(p.id)}">${escHtml(p.title)}</a></li>`
+      ).join('');
+
+      dropdown.innerHTML = allLink + divider + offchipLinks;
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       // Render dynamic content first
       renderProjectCards();
       populateNavDropdown();
+      populateOffchipDropdown();
 
       heroSequence();
 

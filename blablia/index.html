@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blablia — AI Language Tutor for Telegram</title>
+  <meta name="description" content="Blablia is an AI language tutor that lives inside Telegram. Daily structured lessons. No app to install." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0d1117;
+      --bg-card:   #161b22;
+      --bg-card2:  #1c2128;
+      --border:    #30363d;
+      --purple:    #7c3aed;
+      --purple-lt: #a78bfa;
+      --blue:      #2563eb;
+      --blue-lt:   #60a5fa;
+      --green:     #16a34a;
+      --green-lt:  #4ade80;
+      --amber:     #d97706;
+      --amber-lt:  #fbbf24;
+      --red-lt:    #f87171;
+      --text:      #e6edf3;
+      --text-muted:#8b949e;
+      --radius:    12px;
+      --radius-sm: 8px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Top bar ────────────────────────────────────────── */
+    .topbar {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .topbar-back {
+      font-size: .83rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color .2s;
+    }
+    .topbar-back:hover { color: var(--text); }
+
+    .topbar-cta {
+      background: linear-gradient(135deg, var(--purple), var(--blue));
+      color: #fff;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-size: .83rem;
+      font-weight: 600;
+      transition: opacity .2s;
+    }
+    .topbar-cta:hover { opacity: .85; }
+
+    /* ── Hero ───────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, #0d1117 0%, #111827 50%, #1a0a2e 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 80px 24px 72px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -100px; left: 50%; transform: translateX(-50%);
+      width: 700px; height: 400px;
+      background: radial-gradient(ellipse, rgba(124,58,237,0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-icon {
+      width: 72px; height: 72px;
+      background: linear-gradient(135deg, var(--purple), var(--blue));
+      border-radius: 20px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 36px;
+      margin: 0 auto 24px;
+      box-shadow: 0 0 50px rgba(124,58,237,0.45);
+    }
+
+    .hero h1 {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(2.8rem, 6vw, 4.2rem);
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      background: linear-gradient(90deg, var(--purple-lt), var(--blue-lt));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.05;
+      margin-bottom: 18px;
+    }
+
+    .hero-tagline {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin: 0 auto 36px;
+      line-height: 1.65;
+    }
+
+    .hero-tagline strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--purple), var(--blue));
+      color: #fff;
+      padding: 14px 32px;
+      border-radius: 28px;
+      font-size: 1rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: opacity .2s, transform .2s;
+      box-shadow: 0 4px 24px rgba(124,58,237,0.35);
+    }
+    .btn-primary:hover { opacity: .88; transform: translateY(-1px); }
+
+    .btn-secondary {
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 14px 28px;
+      border-radius: 28px;
+      font-size: .95rem;
+      font-weight: 500;
+      transition: border-color .2s, color .2s;
+    }
+    .btn-secondary:hover { border-color: var(--purple-lt); color: var(--text); }
+
+    .hero-sub {
+      margin-top: 28px;
+      font-size: .82rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Badges ─────────────────────────────────────────── */
+    .badges {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 24px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-card);
+    }
+
+    .badge {
+      background: rgba(124,58,237,0.1);
+      border: 1px solid rgba(124,58,237,0.25);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: .78rem;
+      color: var(--purple-lt);
+      font-weight: 500;
+      letter-spacing: .3px;
+    }
+
+    /* ── Sections ───────────────────────────────────────── */
+    .section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 64px 24px;
+    }
+
+    .section + .section {
+      border-top: 1px solid var(--border);
+    }
+
+    .section-label {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--purple-lt);
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(1.4rem, 3vw, 1.9rem);
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.25;
+      margin-bottom: 14px;
+      letter-spacing: -0.2px;
+    }
+
+    .section-intro {
+      font-size: 1.02rem;
+      color: var(--text-muted);
+      max-width: 620px;
+      line-height: 1.75;
+      margin-bottom: 40px;
+    }
+
+    /* ── Problem / pitch ────────────────────────────────── */
+    .pitch-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 600px) { .pitch-grid { grid-template-columns: 1fr; } }
+
+    .pitch-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+
+    .pitch-card-icon {
+      font-size: 1.6rem;
+      margin-bottom: 12px;
+    }
+
+    .pitch-card h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .pitch-card p {
+      font-size: .88rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* ── Steps ──────────────────────────────────────────── */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 22px 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .step-num {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--purple), var(--blue));
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: .9rem;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .step-body h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .step-body p {
+      font-size: .88rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ── Lesson types ───────────────────────────────────── */
+    .lesson-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+    }
+
+    .lesson-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 20px;
+      transition: border-color .25s;
+    }
+
+    .lesson-card:hover { border-color: rgba(124,58,237,0.4); }
+
+    .lesson-icon { font-size: 1.8rem; margin-bottom: 12px; }
+
+    .lesson-card h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .lesson-card p {
+      font-size: .82rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    /* ── Languages ──────────────────────────────────────── */
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .pill {
+      background: var(--bg-card2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: .84rem;
+      color: var(--text);
+    }
+
+    .lang-sub {
+      font-size: .82rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    /* ── Pricing ────────────────────────────────────────── */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 14px;
+    }
+
+    .pricing-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      transition: border-color .25s;
+    }
+
+    .pricing-card:hover { border-color: rgba(124,58,237,0.35); }
+
+    .pricing-card.featured {
+      border-color: rgba(124,58,237,0.5);
+      background: linear-gradient(180deg, rgba(124,58,237,0.08) 0%, var(--bg-card) 100%);
+    }
+
+    .tier-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 10px;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      width: fit-content;
+    }
+
+    .tier-badge.trial     { background: rgba(139,148,158,0.15); color: var(--text-muted); }
+    .tier-badge.basic     { background: rgba(37,99,235,0.15);   color: var(--blue-lt); }
+    .tier-badge.pro       { background: rgba(124,58,237,0.2);   color: var(--purple-lt); }
+    .tier-badge.intensive { background: rgba(217,119,6,0.15);   color: var(--amber-lt); }
+
+    .pricing-price {
+      font-family: 'Inter', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .pricing-period {
+      font-size: .8rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .pricing-annual {
+      font-size: .78rem;
+      color: var(--green-lt);
+      font-weight: 500;
+      margin-bottom: 18px;
+      min-height: 1.2em;
+    }
+
+    .pricing-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      margin-top: auto;
+    }
+
+    .pricing-features li {
+      font-size: .84rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+    }
+
+    .check { color: var(--green-lt); flex-shrink: 0; }
+    .dash  { color: var(--border);   flex-shrink: 0; }
+
+    .pricing-cta {
+      margin-top: 32px;
+      text-align: center;
+    }
+
+    /* ── ToS ────────────────────────────────────────────── */
+    .tos-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .tos-clause {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      transition: border-color .2s;
+    }
+
+    .tos-clause:hover { border-color: rgba(124,58,237,0.3); }
+
+    .tos-clause h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: .88rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tos-num {
+      color: var(--purple-lt);
+      font-size: .78rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .tos-clause p {
+      font-size: .84rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* ── Footer ─────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      background: var(--bg-card);
+      padding: 32px 24px;
+      text-align: center;
+    }
+
+    footer p {
+      font-size: .82rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    footer a {
+      color: var(--purple-lt);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* ── Responsive ─────────────────────────────────────── */
+    @media (max-width: 480px) {
+      .topbar { padding: 10px 16px; }
+      .section { padding: 48px 16px; }
+      .hero { padding: 56px 16px 52px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Top bar ──────────────────────────────────────────────── -->
+  <nav class="topbar">
+    <a href="/" class="topbar-back">← pic-asso.me</a>
+    <div style="display:flex;align-items:center;gap:20px;">
+      <a href="#privacy" style="font-size:.82rem;color:var(--text-muted);">Privacy</a>
+      <a href="#terms" style="font-size:.82rem;color:var(--text-muted);">Terms</a>
+      <a href="https://t.me/blabliabot" class="topbar-cta" target="_blank" rel="noopener">Try it free →</a>
+    </div>
+  </nav>
+
+  <!-- ── Hero ─────────────────────────────────────────────────── -->
+  <header class="hero">
+    <div class="hero-icon">🗣️</div>
+    <h1>Blablia</h1>
+    <p class="hero-tagline">
+      An <strong>AI language tutor</strong> that lives inside Telegram.<br>
+      No app to install. Just open a chat and start your lesson.
+    </p>
+    <div class="hero-actions">
+      <a href="https://t.me/blabliabot" class="btn-primary" target="_blank" rel="noopener">
+        ✈️ Open in Telegram
+      </a>
+      <a href="#pricing" class="btn-secondary">See pricing</a>
+    </div>
+    <p class="hero-sub">3 free lessons — no credit card required</p>
+  </header>
+
+  <!-- ── Badges ───────────────────────────────────────────────── -->
+  <div class="badges">
+    <span class="badge">7 languages</span>
+    <span class="badge">SRS spaced repetition</span>
+    <span class="badge">Powered by Claude</span>
+    <span class="badge">A1 → C1 placement test</span>
+    <span class="badge">Public beta</span>
+  </div>
+
+  <!-- ── Why Telegram ─────────────────────────────────────────── -->
+  <section class="section">
+    <div class="section-label">The idea</div>
+    <h2 class="section-title">Your tutor, where you already are</h2>
+    <p class="section-intro">
+      Most language apps die in your drawer. The habit breaks, not because you stopped caring,
+      but because opening a separate app adds just enough friction to skip it.
+      Blablia removes that switch — Telegram is already open.
+    </p>
+    <div class="pitch-grid">
+      <div class="pitch-card">
+        <div class="pitch-card-icon">🧠</div>
+        <h3>Science-backed spaced repetition</h3>
+        <p>The SM-2 algorithm schedules vocabulary reviews at exactly the right moment — right before you'd forget — so every lesson is efficient, not repetitive.</p>
+      </div>
+      <div class="pitch-card">
+        <div class="pitch-card-icon">🎯</div>
+        <h3>Personalised from day one</h3>
+        <p>A quick adaptive level test places you on the A1–C1 scale. Every lesson from that point is matched to your level and evolves as you improve.</p>
+      </div>
+      <div class="pitch-card">
+        <div class="pitch-card-icon">⏱️</div>
+        <h3>5–10 minutes a day</h3>
+        <p>One complete lesson covers all four stages: vocabulary review, grammar, conversation, and new words. Short enough to do every day, rich enough to actually work.</p>
+      </div>
+      <div class="pitch-card">
+        <div class="pitch-card-icon">🤖</div>
+        <h3>Real AI, not canned responses</h3>
+        <p>Lessons are generated fresh each session by Anthropic's Claude. The roleplay scenario, grammar topic, and flashcard set are never the same twice.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── How it works ─────────────────────────────────────────── -->
+  <section class="section">
+    <div class="section-label">How it works</div>
+    <h2 class="section-title">Three taps to your first lesson</h2>
+    <p class="section-intro">No account, no password, no form to fill in.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3>Open @blabliabot in Telegram and tap Start</h3>
+          <p>Works on any device where you have Telegram — phone, tablet, or desktop.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>Choose your native language and the language you want to learn</h3>
+          <p>Take the quick level test (or skip it if you're a complete beginner — you'll be placed at A1 automatically).</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>Type /lesson and get started</h3>
+          <p>Your first lesson runs right there in the chat. SRS review → grammar → roleplay → flashcards. Progress is saved automatically.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Lesson types ──────────────────────────────────────────── -->
+  <section class="section">
+    <div class="section-label">What's in a lesson</div>
+    <h2 class="section-title">Four stages, every session</h2>
+    <p class="section-intro">Each lesson covers the full loop — from reviewing what you know to practising real conversation.</p>
+    <div class="lesson-grid">
+      <div class="lesson-card">
+        <div class="lesson-icon">🃏</div>
+        <h3>SRS Flashcards</h3>
+        <p>Words due for review today, surfaced by the SM-2 spaced-repetition scheduler.</p>
+      </div>
+      <div class="lesson-card">
+        <div class="lesson-icon">📖</div>
+        <h3>Grammar</h3>
+        <p>A structured explanation and five exercises, rotating through the CEFR syllabus for your level.</p>
+      </div>
+      <div class="lesson-card">
+        <div class="lesson-icon">🎭</div>
+        <h3>Roleplay</h3>
+        <p>A fresh AI-driven conversation scenario each session — café, airport, job interview, anything.</p>
+      </div>
+      <div class="lesson-card">
+        <div class="lesson-icon">📚</div>
+        <h3>Vocabulary</h3>
+        <p>New thematic word sets with context sentences, added automatically to your SRS deck.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Languages ────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="section-label">Languages</div>
+    <h2 class="section-title">Seven languages, one bot</h2>
+    <p class="section-intro">Pick any language to learn — and use the bot in your own language.</p>
+
+    <div class="lang-sub">Learn any of:</div>
+    <div class="pill-row">
+      <span class="pill">🇬🇧 English</span>
+      <span class="pill">🇪🇸 Spanish</span>
+      <span class="pill">🇫🇷 French</span>
+      <span class="pill">🇩🇪 German</span>
+      <span class="pill">🇮🇹 Italian</span>
+      <span class="pill">🇧🇷 Portuguese</span>
+      <span class="pill">🇵🇱 Polish</span>
+    </div>
+
+    <div class="lang-sub">Bot interface available in:</div>
+    <div class="pill-row">
+      <span class="pill">EN</span>
+      <span class="pill">ES</span>
+      <span class="pill">FR</span>
+      <span class="pill">DE</span>
+      <span class="pill">IT</span>
+      <span class="pill">PT</span>
+      <span class="pill">PL</span>
+    </div>
+  </section>
+
+  <!-- ── Pricing ───────────────────────────────────────────────── -->
+  <section class="section" id="pricing">
+    <div class="section-label">Pricing</div>
+    <h2 class="section-title">Start free, upgrade when you're ready</h2>
+    <p class="section-intro">All paid plans include every lesson type, every language, and full progress tracking.</p>
+
+    <div class="pricing-grid">
+      <!-- Trial -->
+      <div class="pricing-card">
+        <span class="tier-badge trial">Trial</span>
+        <div class="pricing-price" style="color:var(--text-muted);">Free</div>
+        <div class="pricing-period">forever</div>
+        <div class="pricing-annual" style="opacity:0;">&nbsp;</div>
+        <ul class="pricing-features">
+          <li><span class="check">✓</span> 3 lessons total</li>
+          <li><span class="check">✓</span> All lesson types</li>
+          <li><span class="check">✓</span> All languages</li>
+          <li><span class="dash">—</span> No card required</li>
+        </ul>
+      </div>
+
+      <!-- Basic -->
+      <div class="pricing-card">
+        <span class="tier-badge basic">Basic</span>
+        <div class="pricing-price" style="color:var(--blue-lt);">€7.99</div>
+        <div class="pricing-period">per month</div>
+        <div class="pricing-annual">€59/yr — save 38%</div>
+        <ul class="pricing-features">
+          <li><span class="check">✓</span> 2 lessons / day</li>
+          <li><span class="check">✓</span> All lesson types</li>
+          <li><span class="check">✓</span> All languages</li>
+          <li><span class="check">✓</span> Progress tracking</li>
+        </ul>
+      </div>
+
+      <!-- Pro -->
+      <div class="pricing-card featured">
+        <span class="tier-badge pro">Pro ★</span>
+        <div class="pricing-price" style="color:var(--purple-lt);">€13.99</div>
+        <div class="pricing-period">per month</div>
+        <div class="pricing-annual">€99/yr — save 41%</div>
+        <ul class="pricing-features">
+          <li><span class="check">✓</span> 4 lessons / day</li>
+          <li><span class="check">✓</span> All lesson types</li>
+          <li><span class="check">✓</span> All languages</li>
+          <li><span class="check">✓</span> Progress tracking</li>
+        </ul>
+      </div>
+
+      <!-- Intensive -->
+      <div class="pricing-card">
+        <span class="tier-badge intensive">Intensive</span>
+        <div class="pricing-price" style="color:var(--amber-lt);">€22.99</div>
+        <div class="pricing-period">per month</div>
+        <div class="pricing-annual">€159/yr — save 42%</div>
+        <ul class="pricing-features">
+          <li><span class="check">✓</span> 8 lessons / day</li>
+          <li><span class="check">✓</span> All lesson types</li>
+          <li><span class="check">✓</span> All languages</li>
+          <li><span class="check">✓</span> Progress tracking</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pricing-cta">
+      <a href="https://t.me/blabliabot" class="btn-primary" target="_blank" rel="noopener">
+        Start with 3 free lessons →
+      </a>
+    </div>
+  </section>
+
+  <!-- ── Privacy Policy ───────────────────────────────────────── -->
+  <section class="section" id="privacy">
+    <div class="section-label">Legal</div>
+    <h2 class="section-title">Privacy Policy</h2>
+    <p class="section-intro">Last updated: April 2026.</p>
+
+    <div class="tos-list">
+      <div class="tos-clause">
+        <h3><span class="tos-num">01</span> What we collect</h3>
+        <p>When you use Blablia, we store your Telegram user ID, username, the language(s) you are learning, your CEFR level, vocabulary progress, grammar history, lesson count, and subscription status.</p>
+      </div>
+      <div class="tos-clause">
+        <h3><span class="tos-num">02</span> What we do not collect</h3>
+        <p>We do not store your phone number, email address, real name, or any payment details. Payment is processed entirely by Stripe — we only receive a confirmation that a subscription was activated.</p>
+      </div>
+      <div class="tos-clause">
+        <h3><span class="tos-num">03</span> AI processing</h3>
+        <p>Text you send during lessons is processed by Anthropic's Claude API to generate lesson content. Anthropic's own privacy policy applies to that processing. We do not store the full content of your lesson conversations — only the vocabulary and progress data extracted from them.</p>
+      </div>
+      <div class="tos-clause">
+        <h3><span class="tos-num">04</span> Data storage</h3>
+        <p>Data is stored in a SQLite database on a Hetzner VPS located in Germany (EU). It is retained for as long as your account is active.</p>
+      </div>
+      <div class="tos-clause">
+        <h3><span class="tos-num">05</span> Your rights</h3>
+        <p>Under GDPR you have the right to access, rectify, or delete your data at any time. To exercise any of these rights, message <a href="https://t.me/pic_asso" target="_blank" rel="noopener" style="color:var(--purple-lt)">@pic_asso</a> on Telegram with your Telegram user ID. Requests are handled within 30 days.</p>
+      </div>
+      <div class="tos-clause">
+        <h3><span class="tos-num">06</span> Contact</h3>
+        <p>Data controller: Aitor López Hernández. Contact: @pic_asso on Telegram.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Terms of Service ──────────────────────────────────────── -->
+  <section class="section" id="terms">
+    <div class="section-label">Legal</div>
+    <h2 class="section-title">Terms of Service</h2>
+    <p class="section-intro">Last updated: April 2026.</p>
+
+    <div class="tos-list">
+      <div class="tos-clause">
+        <h3><span class="tos-num">01</span> Service</h3>
+        <p>Blablia (@blabliabot) is an AI-powered language learning service delivered via Telegram, operated by Aitor López Hernández. By using the bot you agree to these terms. Contact: @pic_asso on Telegram.</p>
+      </div>
+      <div class="tos-clause">
+        <h3><span class="tos-num">02</span> Subscriptions &amp; Billing</h3>
+        <p>Paid plans (Basic, Pro, Intensive) are billed monthly or annually via Stripe. Prices are in euros and include applicable taxes. Subscriptions are not auto-renewed — you will be prompted to renew when your plan expires.</p>
+      </div>
+      <div class="tos-clause">
+        <h3><span class="tos-num">03</span> Refunds</h3>
+        <p>You may request a full refund within 7 days of purchase if you have completed fewer than 5 lessons on the paid plan. After 7 days or 5 lessons (whichever comes first) no refund is issued. To request one, message @pic_asso on Telegram with your Telegram user ID and date of purchase.</p>
+      </div>
+      <div class="tos-clause">
+        <h3><span class="tos-num">04</span> Free Trial</h3>
+        <p>New users receive 3 free lessons with no payment required. Trial access is limited to one account per Telegram user ID.</p>
+      </div>
+      <div class="tos-clause">
+        <h3><span class="tos-num">05</span> AI-Generated Content</h3>
+        <p>Lesson content is generated by Anthropic's Claude model. While quality is generally high, AI can make mistakes. Blablia is a learning aid — always verify important language questions with a native speaker or authoritative reference.</p>
+      </div>
+      <div class="tos-clause">
+        <h3><span class="tos-num">06</span> Data &amp; Privacy</h3>
+        <p>We store your Telegram ID, learning progress, and subscription status. We do not store payment details. You can request access to or deletion of your data at any time by messaging @pic_asso on Telegram. Full details: use /privacy inside the bot.</p>
+      </div>
+      <div class="tos-clause">
+        <h3><span class="tos-num">07</span> Changes</h3>
+        <p>These terms may be updated. Material changes will be announced inside the bot. Continued use after notice constitutes acceptance.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ────────────────────────────────────────────────── -->
+  <footer>
+    <p>
+      Blablia is a side project by <a href="/">Aitor López Hernández</a>
+    </p>
+    <p style="margin-top:6px;">
+      Questions? Message <a href="https://t.me/pic_asso" target="_blank" rel="noopener">@pic_asso</a> on Telegram
+    </p>
+  </footer>
+
+</body>
+</html>

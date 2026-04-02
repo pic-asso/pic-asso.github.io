@@ -28,7 +28,15 @@
         <li><a href="/#journey"  class="nav-link">Journey</a></li>
         <li><a href="/#projects" class="nav-link">Projects</a></li>
         <li><a href="/#pdk"      class="nav-link">PDK</a></li>
-        <li><a href="/#offchip"  class="nav-link">Off-Chip</a></li>
+        <li class="nav-item-dropdown">
+          <a href="/#offchip" class="nav-link nav-link--has-dropdown" aria-haspopup="true" aria-expanded="false">
+            Off-Chip
+            <svg class="dropdown-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="1 1 5 5 9 1"/></svg>
+          </a>
+          <ul class="nav-dropdown" id="nav-dropdown-offchip" role="menu">
+            <!-- populated by JS -->
+          </ul>
+        </li>
         <li><a href="/#connect"  class="nav-link">Connect</a></li>
       </ul>
     </div>
@@ -108,6 +116,12 @@
       <section class="detail-section" id="detail-gallery-section" style="display:none">
         <h2>Gallery</h2>
         <div class="detail-gallery" id="detail-gallery"></div>
+      </section>
+
+      <!-- Terms of Service -->
+      <section class="detail-section" id="detail-tos-section" style="display:none">
+        <h2>Terms of Service</h2>
+        <div class="detail-tos" id="detail-tos"></div>
       </section>
 
     </div>
@@ -381,6 +395,31 @@
           </figure>`)
           .join('');
       }
+
+      // Terms of Service
+      if (project.tos && project.tos.length > 0) {
+        document.getElementById('detail-tos-section').style.display = '';
+        document.getElementById('detail-tos').innerHTML = project.tos
+          .map((clause, i) => `<div class="detail-tos-clause">
+            <h3 class="detail-tos-title"><span class="detail-tos-num">${i + 1}.</span> ${escHtml(clause.title)}</h3>
+            <p>${escHtml(clause.text)}</p>
+          </div>`)
+          .join('');
+      }
+    }
+
+    // ── Off-Chip nav dropdown ──────────────────────────────────
+    function populateOffchipDropdown() {
+      const dropdown = document.getElementById('nav-dropdown-offchip');
+      if (!dropdown || typeof PROJECTS === 'undefined') return;
+
+      const allLink = `<li role="menuitem"><a class="nav-dropdown-link" href="/#offchip">All Off-Chip</a></li>`;
+      const divider = `<li class="nav-dropdown-divider" role="separator"></li>`;
+      const offchipLinks = PROJECTS.filter(p => p.offchip).map(p =>
+        `<li role="menuitem"><a class="nav-dropdown-link" href="${p.id === 'blablia' ? '/blablia/' : '/projects/?id=' + escHtml(p.id)}">${escHtml(p.title)}</a></li>`
+      ).join('');
+
+      dropdown.innerHTML = allLink + divider + offchipLinks;
     }
 
     // ── Bootstrap ─────────────────────────────────────────────
@@ -393,6 +432,7 @@
       const project = PROJECTS.find(p => p.id === id);
       if (!project) { window.location.href = '/#projects'; return; }
 
+      populateOffchipDropdown();
       renderProject(project);
 
       // Syntax highlighting

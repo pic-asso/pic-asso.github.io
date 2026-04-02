@@ -1763,6 +1763,45 @@ a.hobby-card--clickable:hover .hobby-card-cta {
   line-height: 1.55;
 }
 
+/* ── Terms of Service ────────────────────────────────────────── */
+.detail-tos {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+}
+
+.detail-tos-clause {
+  background: var(--glass-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.25rem;
+  transition: border-color .25s;
+}
+
+.detail-tos-clause:hover {
+  border-color: rgba(212, 168, 67, 0.3);
+}
+
+.detail-tos-title {
+  font-family: 'Syne', sans-serif;
+  font-size: .9rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: .4rem;
+}
+
+.detail-tos-num {
+  color: var(--accent);
+  margin-right: .25rem;
+}
+
+.detail-tos-clause p {
+  font-size: .85rem;
+  color: var(--text-main);
+  line-height: 1.65;
+  margin-bottom: 0;
+}
+
 /* ══════════════════════════════════════════════════════════════
    RESPONSIVE
 ══════════════════════════════════════════════════════════════ */
