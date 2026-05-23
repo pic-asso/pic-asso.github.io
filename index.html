@@ -394,11 +394,12 @@
       <p class="section-intro">Life outside the fab — because the best engineers bring the whole person to work.</p>
       <div class="hobbies-grid">
 
-        <div class="hobby-card">
+        <a href="/kato" class="hobby-card hobby-card--clickable">
           <span class="hobby-icon">🗣️</span>
-          <h3>Language Learning</h3>
-          <p>Currently pushing my Polish and fascinated by Slavic morphology — it's a different kind of pattern recognition. German is next on the list.</p>
-        </div>
+          <h3>Kato — Language Learning</h3>
+          <p>Learning Polish broke my brain enough that I built Kato — a mobile app for structured language practice. Currently my main guinea pig.</p>
+          <span class="hobby-card-cta">Try Kato →</span>
+        </a>
 
         <div class="hobby-card">
           <span class="hobby-icon">🍳</span>
@@ -414,9 +415,9 @@
         </a>
 
         <div class="hobby-card">
-          <span class="hobby-icon">🌍</span>
-          <h3>Travel &amp; Culture</h3>
-          <p>Navigating life between different cultures has given me a genuine appreciation for diverse professional environments and unique ways of framing problems.</p>
+          <span class="hobby-icon">🛠️</span>
+          <h3>Open Source Collabs</h3>
+          <p>Contributing to and building on open-source tools — from photonic PDKs to simulation frameworks. If you're working on something interesting, I'm probably already curious about it.</p>
         </div>
 
       </div>
@@ -709,7 +710,9 @@
         `<li role="menuitem"><a class="nav-dropdown-link" href="/projects/?id=${escHtml(p.id)}">${escHtml(p.title)}</a></li>`
       ).join('');
 
-      dropdown.innerHTML = allLink + divider + offchipLinks;
+      const katoLink = `<li role="menuitem"><a class="nav-dropdown-link" href="/kato">Kato</a></li>`;
+
+      dropdown.innerHTML = allLink + divider + katoLink + offchipLinks;
     }
 
     document.addEventListener('DOMContentLoaded', () => {
