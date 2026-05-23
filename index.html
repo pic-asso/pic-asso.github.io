@@ -414,11 +414,12 @@
           <span class="hobby-card-cta">View more →</span>
         </a>
 
-        <div class="hobby-card">
+        <a href="/oss" class="hobby-card hobby-card--clickable">
           <span class="hobby-icon">🛠️</span>
           <h3>Open Source Collabs</h3>
           <p>Contributing to and building on open-source tools — from photonic PDKs to simulation frameworks. If you're working on something interesting, I'm probably already curious about it.</p>
-        </div>
+          <span class="hobby-card-cta">View more →</span>
+        </a>
 
       </div>
     </div>
@@ -706,7 +707,7 @@
 
       const allLink = `<li role="menuitem"><a class="nav-dropdown-link" href="#offchip">All Off-Chip</a></li>`;
       const divider = `<li class="nav-dropdown-divider" role="separator"></li>`;
-      const offchipLinks = PROJECTS.filter(p => p.offchip && p.id !== 'habla-ia').map(p =>
+      const offchipLinks = PROJECTS.filter(p => p.offchip).map(p =>
         `<li role="menuitem"><a class="nav-dropdown-link" href="/projects/?id=${escHtml(p.id)}">${escHtml(p.title)}</a></li>`
       ).join('');
 

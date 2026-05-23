@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Open Source · PIC-asso</title>
+  <meta name="description" content="Open-source contributions by Aitor López Hernández — silicon photonics tooling and beyond." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Raleway:wght@200;300&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    /* ── OSS page ─────────────────────────────────────────────── */
+    .oss-hero {
+      min-height: 40vh;
+      display: flex;
+      align-items: flex-end;
+      background: linear-gradient(135deg, #0e0e18 0%, #1a1a2e 60%, #0a0a14 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .oss-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 80% 50%, rgba(212,168,67,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .oss-hero-content {
+      position: relative;
+      z-index: 1;
+      padding: 5rem 2rem 3.5rem;
+      max-width: 860px;
+      width: 100%;
+      margin: 0 auto;
+    }
+    .oss-hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      color: var(--white);
+      margin: 0.75rem 0 1rem;
+    }
+    .oss-hero p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    /* ── Contribution list ───────────────────────────────────── */
+    .oss-list {
+      padding: 3.5rem 0 5rem;
+    }
+    .oss-list .container {
+      max-width: 860px;
+    }
+    .oss-entry {
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      padding: 1.75rem 2rem;
+      margin-bottom: 1.5rem;
+      background: var(--glass-card);
+      transition: border-color .2s, background .2s;
+    }
+    .oss-entry:hover {
+      border-color: rgba(212,168,67,0.3);
+      background: rgba(255,255,255,0.05);
+    }
+    .oss-entry-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .oss-project-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+    .oss-badge {
+      font-size: 0.7rem;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.2em 0.65em;
+      border-radius: 999px;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+    }
+    .oss-description {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      margin-bottom: 1rem;
+      line-height: 1.65;
+    }
+    .oss-contribution {
+      color: var(--text-main);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 1.1rem;
+    }
+    .oss-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+    }
+    .oss-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.82rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent);
+      border: 1px solid rgba(212,168,67,0.3);
+      border-radius: var(--radius-sm);
+      padding: 0.3em 0.75em;
+      transition: background .2s, border-color .2s;
+    }
+    .oss-link:hover {
+      background: rgba(212,168,67,0.08);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .oss-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    .oss-tag {
+      font-size: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-muted);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-sm);
+      padding: 0.2em 0.6em;
+    }
+
+    @media (max-width: 640px) {
+      .oss-entry { padding: 1.25rem 1.25rem; }
+      .oss-hero-content { padding: 5rem 1.25rem 2.5rem; }
+    }
+  </style>
+</head>
+<body class="project-detail-page">
+
+  <nav class="navbar scrolled" id="navbar">
+    <div class="nav-container">
+      <a href="/" class="nav-logo">PIC-asso</a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="/#about"    class="nav-link">About</a></li>
+        <li><a href="/#journey"  class="nav-link">Journey</a></li>
+        <li><a href="/#projects" class="nav-link">Projects</a></li>
+        <li><a href="/#pdk"      class="nav-link">PDK</a></li>
+        <li class="nav-item-dropdown">
+          <a href="/#offchip" class="nav-link nav-link--has-dropdown" aria-haspopup="true" aria-expanded="false">
+            Off-Chip
+            <svg class="dropdown-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="1 1 5 5 9 1"/></svg>
+          </a>
+          <ul class="nav-dropdown" id="nav-dropdown-offchip" role="menu">
+            <!-- populated by JS -->
+          </ul>
+        </li>
+        <li><a href="/#connect"  class="nav-link">Connect</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="oss-hero">
+    <div class="oss-hero-content">
+      <a href="/" class="project-detail-back">← Back</a>
+      <h1>Open Source Collabs</h1>
+      <p>The silicon photonics ecosystem runs on open-source tooling. Here's where I've put time in.</p>
+    </div>
+  </header>
+
+  <main class="oss-list">
+    <div class="container" id="oss-entries">
+
+      <!-- ── Entry template (duplicate to add more) ── -->
+
+      <article class="oss-entry">
+        <div class="oss-entry-header">
+          <span class="oss-project-name">GDSFactory</span>
+          <span class="oss-badge">Contributor</span>
+        </div>
+        <p class="oss-description">Open-source Python library for designing photonic integrated circuits. The de-facto standard for parametric PIC layout in academia and industry.</p>
+        <p class="oss-contribution">— Add your specific contribution here.</p>
+        <div class="oss-links">
+          <a class="oss-link" href="https://github.com/gdsfactory/gdsfactory" target="_blank" rel="noopener">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            gdsfactory/gdsfactory
+          </a>
+        </div>
+        <div class="oss-tags">
+          <span class="oss-tag">Python</span>
+          <span class="oss-tag">PIC Layout</span>
+          <span class="oss-tag">GDS-II</span>
+        </div>
+      </article>
+
+      <article class="oss-entry">
+        <div class="oss-entry-header">
+          <span class="oss-project-name">FemWell</span>
+          <span class="oss-badge">Contributor</span>
+        </div>
+        <p class="oss-description">Open-source finite-element mode solver for photonic waveguides and cross-sections. Used for computing effective indices, group velocities, and dispersion.</p>
+        <p class="oss-contribution">— Add your specific contribution here.</p>
+        <div class="oss-links">
+          <a class="oss-link" href="https://github.com/gdsfactory/femwell" target="_blank" rel="noopener">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            gdsfactory/femwell
+          </a>
+        </div>
+        <div class="oss-tags">
+          <span class="oss-tag">Python</span>
+          <span class="oss-tag">FEM</span>
+          <span class="oss-tag">Waveguides</span>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>Drawing light. Etching silicon. &nbsp;·&nbsp; &copy; 2026 Aitor López Hernández</p>
+  </footer>
+
+  <script src="../projects-data.js"></script>
+  <script>
+    const toggle   = document.querySelector('.nav-toggle');
+    const navLinks = document.getElementById('nav-links');
+    toggle.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!open));
+      navLinks.classList.toggle('open', !open);
+    });
+
+    function escHtml(str) {
+      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function populateOffchipDropdown() {
+      const dropdown = document.getElementById('nav-dropdown-offchip');
+      if (!dropdown || typeof PROJECTS === 'undefined') return;
+      const allLink  = `<li role="menuitem"><a class="nav-dropdown-link" href="/#offchip">All Off-Chip</a></li>`;
+      const divider  = `<li class="nav-dropdown-divider" role="separator"></li>`;
+      const katoLink = `<li role="menuitem"><a class="nav-dropdown-link" href="/kato">Kato</a></li>`;
+      const links    = PROJECTS.filter(p => p.offchip).map(p =>
+        `<li role="menuitem"><a class="nav-dropdown-link" href="/projects/?id=${escHtml(p.id)}">${escHtml(p.title)}</a></li>`
+      ).join('');
+      dropdown.innerHTML = allLink + divider + katoLink + links;
+    }
+
+    document.addEventListener('DOMContentLoaded', populateOffchipDropdown);
+  </script>
+
+</body>
+</html>
