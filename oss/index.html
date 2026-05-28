@@ -189,41 +189,51 @@
 
       <article class="oss-entry">
         <div class="oss-entry-header">
-          <span class="oss-project-name">GDSFactory</span>
+          <span class="oss-project-name">GDSFactory · gplugins</span>
           <span class="oss-badge">Contributor</span>
         </div>
-        <p class="oss-description">Open-source Python library for designing photonic integrated circuits. The de-facto standard for parametric PIC layout in academia and industry.</p>
-        <p class="oss-contribution">— Add your specific contribution here.</p>
+        <p class="oss-description">Plugin collection for GDSFactory — electromagnetic solvers, process design kit utilities, and simulation interfaces including Meep FDTD.</p>
+        <p class="oss-contribution">Fixed <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">write_sparameters_meep_mpi</code>: the generated MPI subprocess script didn't import any PDK, so <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">get_active_pdk()</code> raised <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">ValueError: No active PDK</code> inside <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">gf.add_padding_container()</code>. Injected a <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">CONF.pdk = CONF.pdk or 'generic'</code> guard at script-generation time — harmless when a custom PDK is already set, and silently activates the built-in generic PDK otherwise.</p>
         <div class="oss-links">
-          <a class="oss-link" href="https://github.com/gdsfactory/gdsfactory" target="_blank" rel="noopener">
+          <a class="oss-link" href="https://github.com/gdsfactory/gplugins" target="_blank" rel="noopener">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-            gdsfactory/gdsfactory
+            gdsfactory/gplugins
+          </a>
+          <a class="oss-link" href="https://github.com/gdsfactory/gplugins/pull/720" target="_blank" rel="noopener">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="6" y1="9" x2="6" y2="15"/><path d="M15 7.7 9 16.3"/></svg>
+            PR #720
           </a>
         </div>
         <div class="oss-tags">
           <span class="oss-tag">Python</span>
-          <span class="oss-tag">PIC Layout</span>
-          <span class="oss-tag">GDS-II</span>
+          <span class="oss-tag">FDTD</span>
+          <span class="oss-tag">Silicon Photonics</span>
+          <span class="oss-tag">MPI</span>
         </div>
       </article>
 
       <article class="oss-entry">
         <div class="oss-entry-header">
-          <span class="oss-project-name">FemWell</span>
+          <span class="oss-project-name">Codegraph</span>
           <span class="oss-badge">Contributor</span>
         </div>
-        <p class="oss-description">Open-source finite-element mode solver for photonic waveguides and cross-sections. Used for computing effective indices, group velocities, and dispersion.</p>
-        <p class="oss-contribution">— Add your specific contribution here.</p>
+        <p class="oss-description">A language-agnostic code-graph indexer that maps symbols, definitions, and references across a codebase for navigation and semantic analysis.</p>
+        <p class="oss-contribution">Added <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">JupyterExtractor</code>: parses <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">.ipynb</code> JSON files, iterates Python code cells, and delegates each cell's source to the existing <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">TreeSitterExtractor</code> with correct line-number offsets so every extracted symbol is addressable across the virtual cell stack. Strips IPython magics before parsing, skips non-Python kernels gracefully, and surfaces malformed notebooks as recoverable <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">ExtractionError</code>s. Extends the <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">Language</code> union, <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">EXTENSION_MAP</code>, and default include globs throughout the codebase.</p>
         <div class="oss-links">
-          <a class="oss-link" href="https://github.com/gdsfactory/femwell" target="_blank" rel="noopener">
+          <a class="oss-link" href="https://github.com/colbymchenry/codegraph" target="_blank" rel="noopener">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-            gdsfactory/femwell
+            colbymchenry/codegraph
+          </a>
+          <a class="oss-link" href="https://github.com/colbymchenry/codegraph/pull/236" target="_blank" rel="noopener">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="6" y1="9" x2="6" y2="15"/><path d="M15 7.7 9 16.3"/></svg>
+            PR #236
           </a>
         </div>
         <div class="oss-tags">
-          <span class="oss-tag">Python</span>
-          <span class="oss-tag">FEM</span>
-          <span class="oss-tag">Waveguides</span>
+          <span class="oss-tag">TypeScript</span>
+          <span class="oss-tag">Tree-sitter</span>
+          <span class="oss-tag">Jupyter</span>
+          <span class="oss-tag">Code Indexing</span>
         </div>
       </article>
 
@@ -254,10 +264,11 @@
       const allLink  = `<li role="menuitem"><a class="nav-dropdown-link" href="/#offchip">All Off-Chip</a></li>`;
       const divider  = `<li class="nav-dropdown-divider" role="separator"></li>`;
       const katoLink = `<li role="menuitem"><a class="nav-dropdown-link" href="/kato">Kato</a></li>`;
+      const ossLink  = `<li role="menuitem"><a class="nav-dropdown-link" href="/oss">Open Source</a></li>`;
       const links    = PROJECTS.filter(p => p.offchip).map(p =>
         `<li role="menuitem"><a class="nav-dropdown-link" href="/projects/?id=${escHtml(p.id)}">${escHtml(p.title)}</a></li>`
       ).join('');
-      dropdown.innerHTML = allLink + divider + katoLink + links;
+      dropdown.innerHTML = allLink + divider + katoLink + ossLink + links;
     }
 
     document.addEventListener('DOMContentLoaded', populateOffchipDropdown);

@@ -712,8 +712,9 @@
       ).join('');
 
       const katoLink = `<li role="menuitem"><a class="nav-dropdown-link" href="/kato">Kato</a></li>`;
+      const ossLink  = `<li role="menuitem"><a class="nav-dropdown-link" href="/oss">Open Source</a></li>`;
 
-      dropdown.innerHTML = allLink + divider + katoLink + offchipLinks;
+      dropdown.innerHTML = allLink + divider + katoLink + ossLink + offchipLinks;
     }
 
     document.addEventListener('DOMContentLoaded', () => {
