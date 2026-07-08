@@ -1010,6 +1010,13 @@ img { max-width: 100%; display: block; }
   padding: 3px;
 }
 
+/* Pre-baked white line-art logos already match the monochrome
+   treatment, so they skip the grayscale → invert → screen pipeline. */
+.tool-logo--baked {
+  filter: none;
+  mix-blend-mode: normal;
+}
+
 /* Individual icon colours */
 .tool-icon--python { background: rgba(55,  118, 171, .22); color: #4b8bbf; border: 1px solid rgba(55, 118, 171, .40); }
 .tool-icon--gds    { background: rgba(212, 168,  67, .15); color: var(--accent); border: 1px solid rgba(212, 168, 67, .38); }
