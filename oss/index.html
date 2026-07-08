@@ -140,6 +140,36 @@
       border-radius: var(--radius-sm);
       padding: 0.2em 0.6em;
     }
+    /* ── Grouped PRs within one project card ── */
+    .oss-repo-link {
+      display: flex;
+      margin-bottom: 0.25rem;
+    }
+    .oss-pr {
+      margin-top: 1.1rem;
+      padding-top: 1.1rem;
+      border-top: 1px solid var(--glass-border);
+    }
+    .oss-pr-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 0.5rem;
+    }
+    .oss-pr-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+    .oss-pr-desc {
+      color: var(--text-main);
+      font-size: 0.92rem;
+      line-height: 1.65;
+      margin: 0;
+    }
 
     @media (max-width: 640px) {
       .oss-entry { padding: 1.25rem 1.25rem; }
@@ -193,17 +223,35 @@
           <span class="oss-badge">Contributor</span>
         </div>
         <p class="oss-description">A JAX-based FDTD (finite-difference time-domain) electromagnetic simulation framework for photonic inverse design, importing device layouts from GDS files.</p>
-        <p class="oss-contribution">Added a parametrizable <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">sidewall_angle</code> (trapezoidal extrusion) to <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">GDSLayerSpec</code> and <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">GDSLayerObject</code>, so GDS-imported waveguides can model realistic angled walls instead of idealized vertical ones. Each z-slice gets a lateral offset of <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">(z − z_ref)·tan(90° − angle)</code> via a Euclidean distance transform (<code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">distance_transform_edt</code>), correctly handling anisotropic grids. The <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">angle == 90°</code> vertical fast-path is preserved for zero performance impact, and the geometry was validated against Tidy3D's <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">PolySlab</code> with effective-index agreement below 0.005.</p>
-        <div class="oss-links">
+        <div class="oss-links oss-repo-link">
           <a class="oss-link" href="https://github.com/ymahlau/fdtdx" target="_blank" rel="noopener">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
             ymahlau/fdtdx
           </a>
-          <a class="oss-link" href="https://github.com/ymahlau/fdtdx/pull/367" target="_blank" rel="noopener">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="6" y1="9" x2="6" y2="15"/><path d="M15 7.7 9 16.3"/></svg>
-            PR #367
-          </a>
         </div>
+
+        <div class="oss-pr">
+          <div class="oss-pr-header">
+            <h3 class="oss-pr-title">Trapezoidal sidewalls for GDS layers</h3>
+            <a class="oss-link" href="https://github.com/ymahlau/fdtdx/pull/367" target="_blank" rel="noopener">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="6" y1="9" x2="6" y2="15"/><path d="M15 7.7 9 16.3"/></svg>
+              PR #367
+            </a>
+          </div>
+          <p class="oss-pr-desc">Added a parametrizable <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">sidewall_angle</code> to GDS layer import, so waveguides model realistic angled walls instead of idealized vertical ones — each z-slice laterally offset via a distance transform, with the vertical fast-path preserved. Validated against Tidy3D's <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">PolySlab</code>.</p>
+        </div>
+
+        <div class="oss-pr">
+          <div class="oss-pr-header">
+            <h3 class="oss-pr-title">Sub-pixel dielectric smoothing</h3>
+            <a class="oss-link" href="https://github.com/ymahlau/fdtdx/pull/395" target="_blank" rel="noopener">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="6" y1="9" x2="6" y2="15"/><path d="M15 7.7 9 16.3"/></svg>
+              PR #395
+            </a>
+          </div>
+          <p class="oss-pr-desc">Added opt-in sub-pixel dielectric smoothing (Farjadpour et al.) for GDS layers, replacing the binary staircased permittivity at material interfaces with a smoothed, anisotropic effective tensor. Removes the first-order Yee staircasing at tilted sidewalls and restores 2nd-order resolution convergence.</p>
+        </div>
+
         <div class="oss-tags">
           <span class="oss-tag">Python</span>
           <span class="oss-tag">FDTD</span>
@@ -218,7 +266,7 @@
           <span class="oss-badge">Contributor</span>
         </div>
         <p class="oss-description">Plugin collection for GDSFactory — electromagnetic solvers, process design kit utilities, and simulation interfaces including Meep FDTD.</p>
-        <p class="oss-contribution">Fixed <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">write_sparameters_meep_mpi</code>: the generated MPI subprocess script didn't import any PDK, so <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">get_active_pdk()</code> raised <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">ValueError: No active PDK</code> inside <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">gf.add_padding_container()</code>. Injected a <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">CONF.pdk = CONF.pdk or 'generic'</code> guard at script-generation time — harmless when a custom PDK is already set, and silently activates the built-in generic PDK otherwise.</p>
+        <p class="oss-contribution">Fixed <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">write_sparameters_meep_mpi</code>: the generated MPI subprocess script imported no PDK, so <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">get_active_pdk()</code> raised <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">ValueError: No active PDK</code>. Injected a <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">CONF.pdk = CONF.pdk or 'generic'</code> guard at script-generation time — harmless when a custom PDK is set, and falls back to the generic PDK otherwise.</p>
         <div class="oss-links">
           <a class="oss-link" href="https://github.com/gdsfactory/gplugins" target="_blank" rel="noopener">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
@@ -243,7 +291,7 @@
           <span class="oss-badge">Contributor</span>
         </div>
         <p class="oss-description">A language-agnostic code-graph indexer that maps symbols, definitions, and references across a codebase for navigation and semantic analysis.</p>
-        <p class="oss-contribution">Added <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">JupyterExtractor</code>: parses <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">.ipynb</code> JSON files, iterates Python code cells, and delegates each cell's source to the existing <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">TreeSitterExtractor</code> with correct line-number offsets so every extracted symbol is addressable across the virtual cell stack. Strips IPython magics before parsing, skips non-Python kernels gracefully, and surfaces malformed notebooks as recoverable <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">ExtractionError</code>s. Extends the <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">Language</code> union, <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">EXTENSION_MAP</code>, and default include globs throughout the codebase.</p>
+        <p class="oss-contribution">Added <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">JupyterExtractor</code>: parses <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">.ipynb</code> files and delegates each Python code cell to the existing <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">TreeSitterExtractor</code> with correct line-number offsets, so every symbol stays addressable across the virtual cell stack. Strips IPython magics, skips non-Python kernels, and surfaces malformed notebooks as recoverable <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">ExtractionError</code>s.</p>
         <div class="oss-links">
           <a class="oss-link" href="https://github.com/colbymchenry/codegraph" target="_blank" rel="noopener">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
