@@ -264,6 +264,17 @@
           <p class="oss-pr-desc">Added opt-in sub-pixel dielectric smoothing (Farjadpour et al.) for GDS layers, replacing the binary staircased permittivity at material interfaces with a smoothed, anisotropic effective tensor. Removes the first-order Yee staircasing at tilted sidewalls and restores 2nd-order resolution convergence.</p>
         </div>
 
+        <div class="oss-pr">
+          <div class="oss-pr-header">
+            <h3 class="oss-pr-title">Multi-GPU mode-solver sharding fix</h3>
+            <a class="oss-link" href="https://github.com/ymahlau/fdtdx/pull/401" target="_blank" rel="noopener">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="6" y1="9" x2="6" y2="15"/><path d="M15 7.7 9 16.3"/></svg>
+              PR #401
+            </a>
+          </div>
+          <p class="oss-pr-desc">On multi-GPU runs the mode solver slices a thin transverse plane out of the x-sharded field arrays, but without a sharding constraint XLA could all-gather the full ~100M-cell parent array instead of just the plane. Added <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em">pin_to_single_device</code> to replicate only the sliced plane across the mesh — gathering a few hundred KB, not gigabytes. A byte-identical no-op on single-device runs.</p>
+        </div>
+
         <div class="oss-tags">
           <span class="oss-tag">Python</span>
           <span class="oss-tag">FDTD</span>
