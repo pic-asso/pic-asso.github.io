@@ -281,6 +281,24 @@
         })
         .join('');
 
+      // Self-contained study page: a fragment with its own styles and script (see `page` in
+      // projects-data.js). It replaces the overview and runs once inserted.
+      if (project.page) {
+        const loader = document.createElement('script');
+        loader.src = project.page;
+        loader.onload = () => {
+          const page = window.PROJECT_PAGE;
+          const style = document.createElement('style');
+          style.textContent = page.css;
+          document.head.appendChild(style);
+          const section = document.getElementById('detail-overview-section');
+          section.querySelector('h2').style.display = 'none';
+          document.getElementById('detail-overview').innerHTML = page.html;
+          new Function(page.js)();
+        };
+        document.body.appendChild(loader);
+      }
+
       // Code
       if (project.codeSnippet) {
         document.getElementById('detail-code').textContent = project.codeSnippet;

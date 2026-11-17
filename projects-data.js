@@ -86,18 +86,16 @@ def bent_dc(
   {
     id: 'linbo3-modulator',
     title: 'Design of a LiNbO\u2083 Modulator',
-    type: 'FDTD Simulation',
+    type: 'Design Study',
     cardVisual: 'fdtd',
-    cardBadge: 'LiNbO\u2083 · 3D FDTD',
-    preview: 'Coming soon.',
-    description: [
-      'Details coming soon.',
-    ],
-    toolstack: ['Tidy3D', 'GDSFactory', 'Python'],
+    cardBadge: 'TFLN \u00b7 112 GBd \u00b7 1 Vpp',
+    preview: 'What decides the design of a thin-film lithium niobate modulator when the driver delivers only 1 volt? Length, velocity matching, RF loss and fabrication spread, worked on an open PDK and checked against foundry measurements.',
+    description: [],
+    page: 'linbo3-modulator.page.js',
+    toolstack: ['GDSFactory', 'FemWell', 'scikit-fem', 'SAX', 'Python'],
     codeSnippet: '',
     imageGallery: [],
     latex: [],
-    status: 'coming-soon',
   },
 
 
