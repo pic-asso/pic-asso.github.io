@@ -89,6 +89,8 @@ def bent_dc(
     type: 'Design Study',
     cardVisual: 'fdtd',
     cardBadge: 'TFLN \u00b7 112 GBd \u00b7 1 Vpp',
+    heroImage: '../images/linbo3/linbo3_hero.png',
+    cardImage: 'images/linbo3/linbo3_card.png',
     preview: 'What decides the design of a thin-film lithium niobate modulator when the driver delivers only 1 volt? Length, velocity matching, RF loss and fabrication spread, worked on an open PDK and checked against foundry measurements.',
     description: [],
     page: 'linbo3-modulator.page.js',
